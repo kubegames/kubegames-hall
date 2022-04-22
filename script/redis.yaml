@@ -1,0 +1,72 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: redis
+  labels:
+    app: redis
+data:
+  redis.conf: |-
+    dir /srv
+    port 6379
+    bind 0.0.0.0
+    appendonly yes
+    daemonize no
+    pidfile /srv/redis-6379.pid
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: redis
+  template:
+    metadata:
+      labels:
+        name: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:5.0.6
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+            - -c
+            - "redis-server /usr/local/redis/redis.conf"
+          ports:
+            - containerPort: 6379
+              name: redis
+              protocol: TCP
+          volumeMounts:
+            - name: redis
+              mountPath: /usr/local/redis/redis.conf
+            # - name: data
+            #   mountPath: /data/k8s/redis/
+      volumes:
+        - name: redis
+          configMap:
+            name: redis
+        # - name: data
+        #   hostPath:
+        #     path: /data/k8s/redis/
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  labels:
+    name: redis
+spec:
+  type: NodePort
+  ports:
+    - name: redis
+      port: 6379
+      targetPort: 6379
+      nodePort: 31379
+  selector:
+    name: redis

@@ -1,0 +1,86 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nats
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nats-io
+  namespace: nats
+spec:
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 8222
+    targetPort: 8222
+    nodePort: 30822
+    name: nats-http
+  - protocol: TCP
+    port: 4222
+    targetPort: 4222
+    nodePort: 30422
+    name: nats-tcp
+  selector:
+    app: nats
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nats
+  namespace: nats
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - port: 6222
+    name: nats-cluster
+  selector:
+    app: nats
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: nats
+  name: nats
+spec:
+  serviceName: "nats"
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nats
+  template:
+    metadata:
+      labels:
+        app: nats
+    spec:
+      containers:
+      - name: nats
+        image: kubegames/nats:v2.7.3
+        ports:
+        - containerPort: 6222
+          name: nats-cluster
+        - containerPort: 8222
+          name: nats-http
+        - containerPort: 4222
+          name: nats-tcp
+        command:
+        - /bin/sh
+        - -c
+        - |
+          HOSTNAME=$(hostname)
+          SET_ID=${HOSTNAME##*-}
+          
+          if [ "${SET_ID}" -gt 0 ]; then
+            NAME=nats-`expr ${SET_ID} - 1`
+            echo "hostname is ${HOSTNAME} set id ${SET_ID} name ${NAME} > 0" 
+            exec /bin/nats-server -c /nats/conf/nats-server.conf --cluster_name NATS --cluster nats://0.0.0.0:6222 --routes=nats://${NAME}.nats:6222
+          else
+            echo "hostname is ${HOSTNAME} set id ${SET_ID} <= 0" 
+            exec /bin/nats-server -c /nats/conf/nats-server.conf --cluster_name NATS --cluster nats://0.0.0.0:6222
+          fi
+          

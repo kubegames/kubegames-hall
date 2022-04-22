@@ -1,0 +1,142 @@
+syntax = "proto3";
+
+package model_player;
+
+option go_package = "github.com/kubegames/kubegames-hall/app/model/player"; 
+
+import "app/lib/gogo/protobuf/gogo.proto";
+import "app/lib/google/protobuf/timestamp.proto";
+
+//option (gogoproto.gostring_all) = true;  
+option (gogoproto.equal_all) = true;  
+option (gogoproto.verbose_equal_all) = true; 
+option (gogoproto.marshaler_all) = true;  
+option (gogoproto.sizer_all) = true;  
+option (gogoproto.unmarshaler_all) = true;  
+option (gogoproto.goproto_getters_all) = false;  
+
+//玩家基础信息
+message Player {
+  //玩家 id
+  uint32 playerID = 1 [(gogoproto.moretags) = "xorm:\"not null pk comment('player id') BigInt\""];
+  //电话
+  string phone = 2 [(gogoproto.moretags) = "xorm:\"unique comment('player phone') Varchar(13)\""]; 
+  //密码
+  string password = 3 [(gogoproto.moretags) = "xorm:\"unique comment('player password') Varchar(255)\""]; 
+  //用户金币
+  int64 balance = 4 [(gogoproto.moretags) = "xorm:\"comment('player balance') BigInt\""];
+  //玩家打码量
+  int64 chip = 5 [(gogoproto.moretags) = "xorm:\"comment('player chip') BigInt\""];
+  //用户头像
+  string avatar = 6 [(gogoproto.moretags) = "xorm:\"comment('player avatar') Varchar(2083)\""];
+  //用户昵称
+  string nick = 7 [(gogoproto.moretags) = "xorm:\"comment('player nick') Varchar(255)\""];
+  //账号
+  string account = 8 [(gogoproto.moretags) = "xorm:\"unique comment('player account') Varchar(13)\""]; 
+  //设备码
+  string equipmentCode = 9 [(gogoproto.moretags) = "xorm:\"comment('player equipmentCode') Varchar(255)\""];
+  //业主id
+  uint32 platformID = 10 [(gogoproto.moretags) = "xorm:\"comment('player platform id') BigInt\""];
+  //性别
+  int32 sex = 11 [(gogoproto.moretags) = "xorm:\"comment('player sex') Int\""];
+  //城市
+  string city = 12 [(gogoproto.moretags) = "xorm:\"comment('player city') Varchar(125)\""];
+  //IP
+  string ip = 13 [(gogoproto.moretags) = "xorm:\"comment('player ip') Varchar(125)\""];
+  //签名
+  string sign = 14 [(gogoproto.moretags) = "xorm:\"comment('player sign') Varchar(255)\""];
+  //是否机器人
+  bool isRobot = 15 [(gogoproto.moretags) = "xorm:\"comment('player is robot') Bool\""];
+  //点控概率
+  int32 pointctl = 16 [(gogoproto.moretags) = "xorm:\"comment('player pointctl') BigInt\""];
+  //血池
+  int32 roomctl = 17 [(gogoproto.moretags) = "xorm:\"comment('player roomctl') BigInt\""];
+  //更新时间
+  google.protobuf.Timestamp updatedAt = 18 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false, (gogoproto.moretags) = "xorm:\"updated\""];
+  //创建时间
+  google.protobuf.Timestamp createdAt = 19 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false, (gogoproto.moretags) = "xorm:\"created\""];
+  // 版本
+  int32 version = 20 [(gogoproto.moretags) = "xorm:\"version\""];
+}
+
+//玩家状态
+message Status {
+  //玩家 id
+  uint32 playerID = 1 [(gogoproto.moretags) = "xorm:\"not null pk comment('player id') BigInt\""];
+  //game id
+  uint32 gameID = 2 [(gogoproto.moretags) = "xorm:\"comment('game id') BigInt\""];
+  //room id
+  uint32 roomID = 3 [(gogoproto.moretags) = "xorm:\"comment('room id') BigInt\""];
+  //game server pod name
+  string podName = 4 [(gogoproto.moretags) = "xorm:\"comment('pod name') Varchar(255)\""];
+  //游戏服务地址
+  string ip = 5 [(gogoproto.moretags) = "xorm:\"comment('游戏服务地址') Varchar(255)\""];
+  //token
+  string token = 6 [(gogoproto.moretags) = "xorm:\"comment('token') Text\""];
+  //更新时间
+  google.protobuf.Timestamp updatedAt = 7 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false, (gogoproto.moretags) = "xorm:\"updated\""];
+  //创建时间
+  google.protobuf.Timestamp createdAt = 8 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false, (gogoproto.moretags) = "xorm:\"created\""];
+  // 版本
+  int32 version = 9 [(gogoproto.moretags) = "xorm:\"version\""];
+}
+
+//玩家战绩
+message PlayerRecord {
+  //自增ID
+  uint64 id = 1 [(gogoproto.moretags) = "xorm:\"not null pk autoincr comment('room id') BigInt\""];
+  //玩家 id
+  uint32 playerID = 2 [(gogoproto.moretags) = "xorm:\"index comment('player id') BigInt\""]; 
+  //局号
+  string gameNum = 3 [(gogoproto.moretags) = "xorm:\"comment('局号') Varchar(255)\""]; 
+  //盈利
+  int64 profitAmount = 4 [(gogoproto.moretags) = "xorm:\"comment('盈利') BigInt\""]; 
+  //总下注
+  int64 betsAmount = 5 [(gogoproto.moretags) = "xorm:\"comment('总下注') BigInt\""]; 
+  //总抽水
+  int64 drawAmount = 6 [(gogoproto.moretags) = "xorm:\"comment('总抽水') BigInt\""]; 
+  //总产出
+  int64 outputAmount = 7 [(gogoproto.moretags) = "xorm:\"comment('总产出') BigInt\""]; 
+  //房间ID
+  uint32 roomID = 8 [(gogoproto.moretags) = "xorm:\"index comment('房间ID') BigInt\""];
+  //游戏ID
+  uint32 gameID = 9 [(gogoproto.moretags) = "xorm:\"index comment('游戏ID') BigInt\""];
+  //用户当前金币
+  int64 balance = 10 [(gogoproto.moretags) = "xorm:\"comment('player balance') BigInt\""];
+  //更新时间
+  google.protobuf.Timestamp updatedAt = 11 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false, (gogoproto.moretags) = "xorm:\"updated\""];
+  //创建时间
+  google.protobuf.Timestamp createdAt = 12 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false, (gogoproto.moretags) = "xorm:\"created\""];
+}
+
+//玩家账单
+message PlayerBill{
+  
+  //自增ID
+  uint64 id = 1 [(gogoproto.moretags) = "xorm:\"not null pk autoincr comment('room id') BigInt\""];
+  //玩家 id
+  uint32 playerID = 2 [(gogoproto.moretags) = "xorm:\"index comment('player id') BigInt\""];
+  //变动前
+  int64 before = 3 [(gogoproto.moretags) = "xorm:\"comment('player id') BigInt\""];
+  //变动的钱
+  int64 balance = 4 [(gogoproto.moretags) = "xorm:\"comment('player id') BigInt\""];
+  //变动后
+  int64 after = 5 [(gogoproto.moretags) = "xorm:\"comment('player id') BigInt\""];
+  enum BillKind 
+    {
+        //全部
+        All = 0;
+        //充值 
+        Recharge = 1;
+        //赠送
+        Give = 2;
+        //游戏
+        Game = 3;
+    }
+  //类型0 全部 1充值 2赠送 3游戏变动
+  BillKind kind = 6 [(gogoproto.moretags) = "xorm:\"comment('bill kind') BigInt\""];
+  //更新时间
+  google.protobuf.Timestamp updatedAt = 7 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false, (gogoproto.moretags) = "xorm:\"updated\""];
+  //创建时间
+  google.protobuf.Timestamp createdAt = 8 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false, (gogoproto.moretags) = "xorm:\"created\""];
+}

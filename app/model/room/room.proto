@@ -1,0 +1,109 @@
+syntax = "proto3";
+
+package model_room;
+
+option go_package = "github.com/kubegames/kubegames-hall/app/model/room"; 
+
+import "app/lib/gogo/protobuf/gogo.proto";
+import "app/lib/google/protobuf/timestamp.proto";
+
+option (gogoproto.gostring_all) = true;  
+option (gogoproto.equal_all) = true;  
+option (gogoproto.verbose_equal_all) = true; 
+option (gogoproto.marshaler_all) = true;  
+option (gogoproto.sizer_all) = true;  
+option (gogoproto.unmarshaler_all) = true;  
+option (gogoproto.goproto_getters_all) = false;  
+
+//房间基础信息
+message Room {
+  //自增ID
+  uint64 id = 1 [(gogoproto.moretags) = "xorm:\"not null pk autoincr comment('room id') BigInt\""];
+  //业主ID
+  uint32 platformID = 2 [(gogoproto.moretags) = "xorm:\"index comment('平台ID') BigInt\""];
+  //状态
+  bool status = 3 [(gogoproto.moretags) = "xorm:\"comment('状态，false关闭，true开放') Bool\""];
+  //房间ID
+  uint32 roomID = 4 [(gogoproto.moretags) = "xorm:\"unique comment('房间ID') BigInt\""];
+  //游戏ID
+  uint32 gameID = 5 [(gogoproto.moretags) = "xorm:\"index comment('游戏ID') BigInt\""];
+  //房间等级
+  int32 level = 6 [(gogoproto.moretags) = "xorm:\"comment('房间等级') Int\""];
+  //游戏房间名称
+  string name = 7 [(gogoproto.moretags) = "xorm:\"comment('游戏房间名称') Varchar(255)\""];
+  //房间明税率
+  uint32 rate = 8 [(gogoproto.moretags) = "xorm:\"comment('房间明税率') BigInt\""];
+  //入场限制
+  uint32 entranceRestrictions = 9 [(gogoproto.moretags) = "xorm:\"comment('入场限制') BigInt\""];
+  //底注
+  int32 bottomNote = 10 [(gogoproto.moretags) = "xorm:\"comment('底注') Int\""];
+  //高级配置
+  string adviceConfig = 11 [(gogoproto.moretags) = "xorm:\"comment('高级配置') Varchar(255)\""];
+  //点控状态
+  int32 pointStatus = 12 [(gogoproto.moretags) = "xorm:\"comment('点控状态') Int\""];
+  //最大人数
+  int32 maxPeople = 13 [(gogoproto.moretags) = "xorm:\"comment('最大人数') Int\""];
+  //最小开赛人数
+  int32 minPeople = 14 [(gogoproto.moretags) = "xorm:\"comment('最小开赛人数') Int\""];
+  //是否允许关闭
+  bool isAllowClose = 15 [(gogoproto.moretags) = "xorm:\"comment('是否允许关闭') Bool\""];
+  //是否开启机器人
+  bool isOpenAiRobot = 16 [(gogoproto.moretags) = "xorm:\"comment('是否开启机器人') Bool\""];
+  //是否开启跨业主匹配
+  bool isOpenCrossPlatformMatch = 17 [(gogoproto.moretags) = "xorm:\"comment('是否开启跨业主匹配') Bool\""];
+  //允许的平台
+  repeated uint32 allowPlatformID = 18 [(gogoproto.moretags) = "xorm:\"comment('允许的平台')\""];
+  //是否允许自动创建桌子
+  bool isAllowAutoCreateTable = 19 [(gogoproto.moretags) = "xorm:\"comment('是否允许自动创建桌子') Bool\""];
+  //机器人配置
+  repeated RobotConfig robot = 20 [(gogoproto.moretags) = "xorm:\"comment('机器人配置')\""];
+  //最大金额
+  int64 robotMaxBalance = 21 [(gogoproto.moretags) = "xorm:\"comment('机器人携带最大金额') BigInt\""];
+  //最小金额
+  int64 robotMinBalance = 22 [(gogoproto.moretags) = "xorm:\"comment('机器人携带最小金额') BigInt\""];
+  //绑定房间水池
+  int64 RoomPoolID = 23 [(gogoproto.moretags) = "xorm:\"comment('绑定房间水池') BigInt\""];
+}
+
+//机器人配置
+message RobotConfig {
+  //最小人数
+  uint32 Min = 1;
+  //最大人数
+  uint32 Max = 2;
+}
+
+//服务运行的房间
+message ServerRunRoom {
+  //自增ID
+  uint64 id = 1 [(gogoproto.moretags) = "xorm:\"not null pk autoincr comment('room id') BigInt\""];
+  //房间 ID
+  uint32 roomID = 2 [(gogoproto.moretags) = "xorm:\"unique(roomid_ip) comment('房间 ID') BigInt\""];
+  //游戏服务地址
+  string ip = 3 [(gogoproto.moretags) = "xorm:\"unique(roomid_ip) comment('游戏服务地址') Varchar(255)\""];
+}
+
+
+//房间和游戏绑定
+message ServerLockRoom {
+  //自增ID
+  uint64 id = 1 [(gogoproto.moretags) = "xorm:\"not null pk autoincr comment('room id') BigInt\""];
+  //房间 ID
+  uint32 roomID = 2 [(gogoproto.moretags) = "xorm:\"unique comment('房间 ID') BigInt\""];
+  //游戏服务地址
+  string ip = 3 [(gogoproto.moretags) = "xorm:\"comment('游戏服务地址') Varchar(255)\""];
+  //创建时间
+  google.protobuf.Timestamp createdAt = 4 [(gogoproto.stdtime) = true, (gogoproto.nullable) = false, (gogoproto.moretags) = "xorm:\"created\""];
+}
+
+//房间水池
+message RoomPool {
+  //自增ID
+  uint64 id = 1 [(gogoproto.moretags) = "xorm:\"not null pk autoincr comment('room id') BigInt\""];
+  //血池名称
+  string name = 2 [(gogoproto.moretags) = "xorm:\"unique comment('血池名称') Varchar(255)\""];
+  //业主ID
+  uint32 platformID = 3 [(gogoproto.moretags) = "xorm:\"index comment('平台ID') BigInt\""];
+  //水位线
+  int64 WaterLevelLine = 4 [(gogoproto.moretags) = "xorm:\"comment('水位线') BigInt\""];
+}

@@ -1,0 +1,2524 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "kubegames game game api swagger swagger",
+    "version": "1.0",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "tags": [
+    {
+      "name": "GameService"
+    },
+    {
+      "name": "MatchService"
+    },
+    {
+      "name": "PlatformService"
+    },
+    {
+      "name": "PlayerService"
+    },
+    {
+      "name": "RoomService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/game/v1/add": {
+      "post": {
+        "summary": "添加游戏",
+        "operationId": "GameService_AddGameRequest",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/game_typesAddGameResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/game_typesAddGameRequest"
+            }
+          }
+        ],
+        "tags": [
+          "GameService"
+        ]
+      }
+    },
+    "/game/v1/close/{gameID}": {
+      "delete": {
+        "summary": "关闭游戏服务",
+        "operationId": "GameService_CloseGame",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/game_typesCloseGameResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "gameID",
+            "description": "游戏ID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "GameService"
+        ]
+      }
+    },
+    "/game/v1/find/{gameID}": {
+      "get": {
+        "summary": "查找游戏服务",
+        "operationId": "GameService_FindGame",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/game_typesFindGameResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "gameID",
+            "description": "游戏ID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "GameService"
+        ]
+      }
+    },
+    "/game/v1/finds": {
+      "get": {
+        "summary": "查找游戏服务",
+        "operationId": "GameService_FindGames",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/game_typesFindGamesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "GameService"
+        ]
+      }
+    },
+    "/game/v1/start": {
+      "post": {
+        "summary": "启动游戏服务",
+        "operationId": "GameService_StartGame",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/game_typesStartGameResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/game_typesStartGameRequest"
+            }
+          }
+        ],
+        "tags": [
+          "GameService"
+        ]
+      }
+    },
+    "/match/v1/match": {
+      "post": {
+        "summary": "match player",
+        "operationId": "MatchService_Match",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/match_typesMatchResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/match_typesMatchRequest"
+            }
+          }
+        ],
+        "tags": [
+          "MatchService"
+        ]
+      }
+    },
+    "/match/v1/ping": {
+      "post": {
+        "summary": "Ping",
+        "operationId": "MatchService_Ping",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/match_typesPingResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/match_typesPingRequest"
+            }
+          }
+        ],
+        "tags": [
+          "MatchService"
+        ]
+      }
+    },
+    "/platform/v1/acquire/room": {
+      "post": {
+        "summary": "抢占房间",
+        "operationId": "PlatformService_AcquireRoom",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/platform_typesAcquireRoomResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/platform_typesAcquireRoomRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PlatformService"
+        ],
+        "security": []
+      }
+    },
+    "/platform/v1/apply/robot": {
+      "post": {
+        "summary": "申请机器人",
+        "operationId": "PlatformService_ApplyRobot",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/platform_typesApplyRobotResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/platform_typesApplyRobotRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PlatformService"
+        ],
+        "security": []
+      }
+    },
+    "/platform/v1/broadcast": {
+      "post": {
+        "summary": "广播",
+        "operationId": "PlatformService_Broadcast",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/platform_typesBroadcastResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/platform_typesBroadcastRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PlatformService"
+        ],
+        "security": []
+      }
+    },
+    "/platform/v1/find/rooms/{gameID}": {
+      "get": {
+        "summary": "获取房间列表",
+        "operationId": "PlatformService_FindRooms",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/platform_typesFindRoomsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "gameID",
+            "description": "游戏ID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "PlatformService"
+        ],
+        "security": []
+      }
+    },
+    "/platform/v1/get/room/pool/{roomID}": {
+      "get": {
+        "summary": "获取房间血池值",
+        "operationId": "PlatformService_GetRoomPool",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/platform_typesGetRoomPoolResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "roomID",
+            "description": "房间ID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "PlatformService"
+        ],
+        "security": []
+      }
+    },
+    "/platform/v1/player/leave/{playerID}": {
+      "delete": {
+        "summary": "玩家离开游戏",
+        "operationId": "PlatformService_PlayerLeaveGame",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/platform_typesPlayerLeaveGameResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "playerID",
+            "description": "玩家 ID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "isRobot",
+            "description": "是否是机器人",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "PlatformService"
+        ],
+        "security": []
+      }
+    },
+    "/platform/v1/release/room": {
+      "put": {
+        "summary": "释放房间",
+        "operationId": "PlatformService_ReleaseRoom",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/platform_typesReleaseRoomResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/platform_typesReleaseRoomRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PlatformService"
+        ],
+        "security": []
+      }
+    },
+    "/platform/v1/running/room": {
+      "post": {
+        "summary": "运行房间",
+        "operationId": "PlatformService_RunningRoom",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/platform_typesRunningRoomResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/platform_typesRunningRoomRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PlatformService"
+        ],
+        "security": []
+      }
+    },
+    "/platform/v1/upload/record": {
+      "post": {
+        "summary": "战绩上传",
+        "operationId": "PlatformService_UploadPlayerRecord",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/platform_typesUploadPlayerRecordResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/platform_typesUploadPlayerRecordRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PlatformService"
+        ],
+        "security": []
+      }
+    },
+    "/platform/v1/upload/settle/info": {
+      "post": {
+        "summary": "上传用户结算信息",
+        "operationId": "PlatformService_UploadPlayerSettleInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/platform_typesUploadPlayerSettleInfoResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/platform_typesUploadPlayerSettleInfoRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PlatformService"
+        ],
+        "security": []
+      }
+    },
+    "/player/v1/give": {
+      "post": {
+        "summary": "玩家赠送金币",
+        "operationId": "PlayerService_PlayerGive",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerGiveResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerGiveRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PlayerService"
+        ]
+      }
+    },
+    "/player/v1/info": {
+      "get": {
+        "summary": "玩家信息",
+        "operationId": "PlayerService_PlayerInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerInfoResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "PlayerService"
+        ]
+      }
+    },
+    "/player/v1/login": {
+      "post": {
+        "summary": "玩家登录",
+        "operationId": "PlayerService_PlayerLogin",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerLoginResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerLoginRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PlayerService"
+        ],
+        "security": []
+      }
+    },
+    "/player/v1/match": {
+      "post": {
+        "summary": "玩家匹配",
+        "operationId": "PlayerService_PlayerMatch",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerMatchResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerMatchRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PlayerService"
+        ]
+      }
+    },
+    "/player/v1/recharge": {
+      "post": {
+        "summary": "玩家充值金币",
+        "operationId": "PlayerService_PlayerRecharge",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerRechargeResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerRechargeRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PlayerService"
+        ]
+      }
+    },
+    "/room/pool/v1/adds": {
+      "post": {
+        "summary": "添加游戏房间血池",
+        "operationId": "RoomService_AddGameRoomPools",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/room_typesAddGameRoomPoolsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/room_typesAddGameRoomPoolsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RoomService"
+        ]
+      }
+    },
+    "/room/pool/v1/bind": {
+      "post": {
+        "summary": "绑定游戏房间血池",
+        "operationId": "RoomService_BindGameRoomPool",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/room_typesBindGameRoomPoolResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/room_typesBindGameRoomPoolRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RoomService"
+        ]
+      }
+    },
+    "/room/pool/v1/find/{id}": {
+      "get": {
+        "summary": "查询游戏血池",
+        "operationId": "RoomService_FindGameRoomPool",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/room_typesFindGameRoomPoolResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "血池 ID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "RoomService"
+        ]
+      }
+    },
+    "/room/pool/v1/finds": {
+      "get": {
+        "summary": "查询游戏血池列表",
+        "operationId": "RoomService_FindGameRoomPools",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/room_typesFindGameRoomPoolsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "RoomService"
+        ]
+      }
+    },
+    "/room/pool/v1/unbound": {
+      "post": {
+        "summary": "解绑游戏房间血池",
+        "operationId": "RoomService_UnboundGameRoomPool",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/room_typesUnboundGameRoomPoolResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/room_typesUnboundGameRoomPoolRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RoomService"
+        ]
+      }
+    },
+    "/room/pool/v1/{id}": {
+      "delete": {
+        "summary": "删除游戏房间血池",
+        "operationId": "RoomService_DeleteGameRoomPool",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/room_typesDeleteGameRoomPoolResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "血池 ID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "RoomService"
+        ]
+      }
+    },
+    "/room/v1/add": {
+      "post": {
+        "summary": "添加游戏房间",
+        "operationId": "RoomService_AddGameRoom",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/room_typesAddGameRoomResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/room_typesAddGameRoomRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RoomService"
+        ]
+      }
+    },
+    "/room/v1/adds": {
+      "post": {
+        "summary": "批量添加游戏房间",
+        "operationId": "RoomService_AddGameRooms",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/room_typesAddGameRoomsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/room_typesAddGameRoomsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RoomService"
+        ]
+      }
+    },
+    "/room/v1/close/{roomID}": {
+      "delete": {
+        "summary": "关闭游戏房间",
+        "operationId": "RoomService_CloseGameRoom",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/room_typesCloseGameRoomResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "roomID",
+            "description": "房间ID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "RoomService"
+        ]
+      }
+    },
+    "/room/v1/find/{roomID}": {
+      "get": {
+        "summary": "查找房间信息",
+        "operationId": "RoomService_FindGameRoom",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/room_typesFindGameRoomResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "roomID",
+            "description": "房间 ID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "RoomService"
+        ]
+      }
+    },
+    "/room/v1/finds/{gameID}/{status}": {
+      "get": {
+        "summary": "查找游戏房间列表",
+        "operationId": "RoomService_FindGameRooms",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/room_typesFindGameRoomsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "gameID",
+            "description": "游戏ID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "status",
+            "description": "房间状态 0全部 1关闭 2开启",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "RoomService"
+        ]
+      }
+    },
+    "/room/v1/open": {
+      "post": {
+        "summary": "开启游戏房间",
+        "operationId": "RoomService_OpenGameRoom",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/room_typesOpenGameRoomResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/room_typesOpenGameRoomRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RoomService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "game_typesAddGameRequest": {
+      "type": "object",
+      "properties": {
+        "gameID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "游戏ID"
+        },
+        "name": {
+          "type": "string",
+          "title": "游戏名称"
+        },
+        "config": {
+          "$ref": "#/definitions/game_typesGameConfig",
+          "title": "房间配置"
+        }
+      },
+      "title": "添加游戏请求"
+    },
+    "game_typesAddGameResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "添加游戏响应"
+    },
+    "game_typesCloseGameResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "关闭游戏响应"
+    },
+    "game_typesFindGameResponse": {
+      "type": "object",
+      "properties": {
+        "Game": {
+          "$ref": "#/definitions/model_gameGame"
+        }
+      },
+      "title": "查询游戏响应"
+    },
+    "game_typesFindGamesResponse": {
+      "type": "object",
+      "properties": {
+        "Games": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/model_gameGame"
+          }
+        }
+      },
+      "title": "查询游戏列表响应"
+    },
+    "game_typesGameConfig": {
+      "type": "object",
+      "properties": {
+        "platform": {
+          "type": "string",
+          "title": "游戏大厅地址"
+        },
+        "maxPeople": {
+          "type": "integer",
+          "format": "int64",
+          "title": "最多进入人数"
+        },
+        "runmode": {
+          "type": "string",
+          "title": "运行模式"
+        }
+      },
+      "title": "游戏配置请求"
+    },
+    "game_typesStartGameRequest": {
+      "type": "object",
+      "properties": {
+        "gameID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "游戏ID"
+        },
+        "image": {
+          "type": "string",
+          "title": "镜像"
+        },
+        "replicas": {
+          "type": "integer",
+          "format": "int64",
+          "title": "运行副本数"
+        },
+        "port": {
+          "type": "integer",
+          "format": "int64",
+          "title": "端口"
+        },
+        "commonds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "启动命令"
+        },
+        "cpu": {
+          "type": "integer",
+          "format": "int64",
+          "title": "最大可用 cpu (1000 = 1cpu)"
+        },
+        "memory": {
+          "type": "integer",
+          "format": "int64",
+          "title": "最大可用内存 memory (1=1Mi)"
+        }
+      },
+      "title": "启动游戏服务请求"
+    },
+    "game_typesStartGameResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "启动游戏响应"
+    },
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "match_typesMatchRequest": {
+      "type": "object",
+      "properties": {
+        "gameID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "游戏 ID"
+        },
+        "roomID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "房间 ID"
+        },
+        "player": {
+          "$ref": "#/definitions/model_playerPlayer",
+          "title": "匹配玩家信息"
+        },
+        "token": {
+          "type": "string",
+          "title": "玩家使用 token"
+        }
+      }
+    },
+    "match_typesMatchResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        },
+        "note": {
+          "type": "string",
+          "title": "note"
+        },
+        "stop": {
+          "type": "boolean",
+          "title": "is stop"
+        },
+        "token": {
+          "type": "string",
+          "title": "jwt token"
+        },
+        "url": {
+          "type": "string",
+          "title": "game server connect url"
+        },
+        "podName": {
+          "type": "string",
+          "title": "custom matching must be set"
+        },
+        "podIp": {
+          "type": "string",
+          "title": "custom matching must be set"
+        }
+      }
+    },
+    "match_typesPingRequest": {
+      "type": "object"
+    },
+    "match_typesPingResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        }
+      }
+    },
+    "model_gameGame": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64",
+          "title": "自增ID"
+        },
+        "gameID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "游戏ID"
+        },
+        "name": {
+          "type": "string",
+          "title": "游戏名称"
+        },
+        "status": {
+          "type": "boolean",
+          "title": "状态"
+        },
+        "image": {
+          "type": "string",
+          "title": "镜像"
+        },
+        "replicas": {
+          "type": "integer",
+          "format": "int64",
+          "title": "运行副本数"
+        },
+        "port": {
+          "type": "integer",
+          "format": "int64",
+          "title": "端口"
+        },
+        "commonds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "启动命令"
+        },
+        "cpu": {
+          "type": "integer",
+          "format": "int64",
+          "title": "最大可用 cpu (1000 = 1cpu)"
+        },
+        "memory": {
+          "type": "integer",
+          "format": "int64",
+          "title": "最大可用内存 memory (1=1Mi)"
+        },
+        "config": {
+          "$ref": "#/definitions/model_gameGameConfig",
+          "title": "游戏篇日志"
+        }
+      },
+      "title": "游戏基础信息"
+    },
+    "model_gameGameConfig": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64",
+          "title": "自增ID"
+        },
+        "name": {
+          "type": "string",
+          "title": "游戏名称"
+        },
+        "gameID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "游戏ID"
+        },
+        "platform": {
+          "type": "string",
+          "title": "游戏平台地址"
+        },
+        "maxPeople": {
+          "type": "integer",
+          "format": "int64",
+          "title": "最多进入人数"
+        },
+        "runmode": {
+          "type": "string",
+          "title": "运行模式"
+        }
+      },
+      "title": "游戏配置"
+    },
+    "model_playerPlayer": {
+      "type": "object",
+      "properties": {
+        "playerID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "玩家 id"
+        },
+        "phone": {
+          "type": "string",
+          "title": "电话"
+        },
+        "password": {
+          "type": "string",
+          "title": "密码"
+        },
+        "balance": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户金币"
+        },
+        "chip": {
+          "type": "string",
+          "format": "int64",
+          "title": "玩家打码量"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "用户头像"
+        },
+        "nick": {
+          "type": "string",
+          "title": "用户昵称"
+        },
+        "account": {
+          "type": "string",
+          "title": "账号"
+        },
+        "equipmentCode": {
+          "type": "string",
+          "title": "设备码"
+        },
+        "platformID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "业主id"
+        },
+        "sex": {
+          "type": "integer",
+          "format": "int32",
+          "title": "性别"
+        },
+        "city": {
+          "type": "string",
+          "title": "城市"
+        },
+        "ip": {
+          "type": "string",
+          "title": "IP"
+        },
+        "sign": {
+          "type": "string",
+          "title": "签名"
+        },
+        "isRobot": {
+          "type": "boolean",
+          "title": "是否机器人"
+        },
+        "pointctl": {
+          "type": "integer",
+          "format": "int32",
+          "title": "点控概率"
+        },
+        "roomctl": {
+          "type": "integer",
+          "format": "int32",
+          "title": "血池"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32",
+          "title": "版本"
+        }
+      },
+      "title": "玩家基础信息"
+    },
+    "model_playerPlayerRecord": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64",
+          "title": "自增ID"
+        },
+        "playerID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "玩家 id"
+        },
+        "gameNum": {
+          "type": "string",
+          "title": "局号"
+        },
+        "profitAmount": {
+          "type": "string",
+          "format": "int64",
+          "title": "盈利"
+        },
+        "betsAmount": {
+          "type": "string",
+          "format": "int64",
+          "title": "总下注"
+        },
+        "drawAmount": {
+          "type": "string",
+          "format": "int64",
+          "title": "总抽水"
+        },
+        "outputAmount": {
+          "type": "string",
+          "format": "int64",
+          "title": "总产出"
+        },
+        "roomID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "房间ID"
+        },
+        "gameID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "游戏ID"
+        },
+        "balance": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户当前金币"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        }
+      },
+      "title": "玩家战绩"
+    },
+    "model_playerStatus": {
+      "type": "object",
+      "properties": {
+        "playerID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "玩家 id"
+        },
+        "gameID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "game id"
+        },
+        "roomID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "room id"
+        },
+        "podName": {
+          "type": "string",
+          "title": "game server pod name"
+        },
+        "ip": {
+          "type": "string",
+          "title": "游戏服务地址"
+        },
+        "token": {
+          "type": "string",
+          "title": "token"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32",
+          "title": "版本"
+        }
+      },
+      "title": "玩家状态"
+    },
+    "model_roomRobotConfig": {
+      "type": "object",
+      "properties": {
+        "Min": {
+          "type": "integer",
+          "format": "int64",
+          "title": "最小人数"
+        },
+        "Max": {
+          "type": "integer",
+          "format": "int64",
+          "title": "最大人数"
+        }
+      },
+      "title": "机器人配置"
+    },
+    "model_roomRoom": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64",
+          "title": "自增ID"
+        },
+        "platformID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "业主ID"
+        },
+        "status": {
+          "type": "boolean",
+          "title": "状态"
+        },
+        "roomID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "房间ID"
+        },
+        "gameID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "游戏ID"
+        },
+        "level": {
+          "type": "integer",
+          "format": "int32",
+          "title": "房间等级"
+        },
+        "name": {
+          "type": "string",
+          "title": "游戏房间名称"
+        },
+        "rate": {
+          "type": "integer",
+          "format": "int64",
+          "title": "房间明税率"
+        },
+        "entranceRestrictions": {
+          "type": "integer",
+          "format": "int64",
+          "title": "入场限制"
+        },
+        "bottomNote": {
+          "type": "integer",
+          "format": "int32",
+          "title": "底注"
+        },
+        "adviceConfig": {
+          "type": "string",
+          "title": "高级配置"
+        },
+        "pointStatus": {
+          "type": "integer",
+          "format": "int32",
+          "title": "点控状态"
+        },
+        "maxPeople": {
+          "type": "integer",
+          "format": "int32",
+          "title": "最大人数"
+        },
+        "minPeople": {
+          "type": "integer",
+          "format": "int32",
+          "title": "最小开赛人数"
+        },
+        "isAllowClose": {
+          "type": "boolean",
+          "title": "是否允许关闭"
+        },
+        "isOpenAiRobot": {
+          "type": "boolean",
+          "title": "是否开启机器人"
+        },
+        "isOpenCrossPlatformMatch": {
+          "type": "boolean",
+          "title": "是否开启跨业主匹配"
+        },
+        "allowPlatformID": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "title": "允许的平台"
+        },
+        "isAllowAutoCreateTable": {
+          "type": "boolean",
+          "title": "是否允许自动创建桌子"
+        },
+        "robot": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/model_roomRobotConfig"
+          },
+          "title": "机器人配置"
+        },
+        "robotMaxBalance": {
+          "type": "string",
+          "format": "int64",
+          "title": "最大金额"
+        },
+        "robotMinBalance": {
+          "type": "string",
+          "format": "int64",
+          "title": "最小金额"
+        },
+        "RoomPoolID": {
+          "type": "string",
+          "format": "int64",
+          "title": "绑定房间水池"
+        }
+      },
+      "title": "房间基础信息"
+    },
+    "model_roomRoomPool": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64",
+          "title": "自增ID"
+        },
+        "name": {
+          "type": "string",
+          "title": "血池名称"
+        },
+        "platformID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "业主ID"
+        },
+        "WaterLevelLine": {
+          "type": "string",
+          "format": "int64",
+          "title": "水位线"
+        }
+      },
+      "title": "房间水池"
+    },
+    "platform_typesAcquireRoomRequest": {
+      "type": "object",
+      "properties": {
+        "roomID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "房间ID"
+        },
+        "ip": {
+          "type": "string",
+          "title": "ip"
+        }
+      },
+      "title": "抢占房间请求"
+    },
+    "platform_typesAcquireRoomResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        }
+      },
+      "title": "抢占房间响应"
+    },
+    "platform_typesApplyRobotRequest": {
+      "type": "object",
+      "properties": {
+        "entrancerestrictions": {
+          "type": "string",
+          "format": "int64",
+          "title": "进入"
+        },
+        "gameID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "游戏 ID"
+        },
+        "roomID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "房间 ID"
+        },
+        "number": {
+          "type": "integer",
+          "format": "int64",
+          "title": "机器人数量"
+        },
+        "maxBalance": {
+          "type": "string",
+          "format": "int64",
+          "title": "最大金额"
+        },
+        "minBalance": {
+          "type": "string",
+          "format": "int64",
+          "title": "最小金额"
+        }
+      },
+      "title": "申请机器人请求"
+    },
+    "platform_typesApplyRobotResponse": {
+      "type": "object",
+      "properties": {
+        "gameID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "游戏 ID"
+        },
+        "roomID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "房间 ID"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/platform_typesRobotInfo"
+          },
+          "title": "机器人信息"
+        }
+      },
+      "title": "申请机器人响应"
+    },
+    "platform_typesBroadcastRequest": {
+      "type": "object",
+      "properties": {
+        "buff": {
+          "type": "string",
+          "format": "byte"
+        }
+      },
+      "title": "广播消息请求"
+    },
+    "platform_typesBroadcastResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        }
+      },
+      "title": "广播消息响应"
+    },
+    "platform_typesFindRoomsResponse": {
+      "type": "object",
+      "properties": {
+        "Rooms": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/model_roomRoom"
+          }
+        }
+      },
+      "title": "查询游戏开启房间响应"
+    },
+    "platform_typesGetRoomPoolResponse": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "format": "int64",
+          "title": "房间ID"
+        }
+      },
+      "title": "获取房间血池值响应"
+    },
+    "platform_typesPlayerLeaveGameResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "玩家离开游戏响应"
+    },
+    "platform_typesReleaseRoomRequest": {
+      "type": "object",
+      "properties": {
+        "roomID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "房间ID"
+        },
+        "ip": {
+          "type": "string",
+          "title": "ip"
+        }
+      },
+      "title": "释放房间请求"
+    },
+    "platform_typesReleaseRoomResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        }
+      },
+      "title": "释放房间响应"
+    },
+    "platform_typesRobotInfo": {
+      "type": "object",
+      "properties": {
+        "player": {
+          "$ref": "#/definitions/model_playerPlayer",
+          "title": "匹配玩家信息"
+        },
+        "token": {
+          "type": "string",
+          "title": "玩家使用 token"
+        }
+      },
+      "title": "机器人信息"
+    },
+    "platform_typesRunningRoomRequest": {
+      "type": "object",
+      "properties": {
+        "roomID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "房间ID"
+        },
+        "ip": {
+          "type": "string",
+          "title": "ip"
+        }
+      },
+      "title": "运行房间请求"
+    },
+    "platform_typesRunningRoomResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        }
+      },
+      "title": "运行房间响应"
+    },
+    "platform_typesUploadPlayerRecordRequest": {
+      "type": "object",
+      "properties": {
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/model_playerPlayerRecord"
+          },
+          "title": "战绩"
+        }
+      },
+      "title": "上传战绩"
+    },
+    "platform_typesUploadPlayerRecordResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "上传战绩"
+    },
+    "platform_typesUploadPlayerSettleInfoRequest": {
+      "type": "object",
+      "properties": {
+        "playerID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "玩家 id"
+        },
+        "balance": {
+          "type": "string",
+          "format": "int64",
+          "title": "玩家变动金币"
+        },
+        "chip": {
+          "type": "string",
+          "format": "int64",
+          "title": "玩家打码量"
+        }
+      },
+      "title": "上传用户结算信息返回"
+    },
+    "platform_typesUploadPlayerSettleInfoResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "上传用户结算信息响应"
+    },
+    "player_typesPlayerGiveRequest": {
+      "type": "object",
+      "properties": {
+        "playerID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "赠送玩家id"
+        },
+        "balance": {
+          "type": "string",
+          "format": "int64",
+          "title": "赠送的金币"
+        }
+      },
+      "title": "玩家赠送金币请求"
+    },
+    "player_typesPlayerGiveResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "玩家赠送金币响应"
+    },
+    "player_typesPlayerInfoResponse": {
+      "type": "object",
+      "properties": {
+        "playerInfo": {
+          "$ref": "#/definitions/model_playerPlayer",
+          "title": "player info"
+        },
+        "status": {
+          "$ref": "#/definitions/model_playerStatus",
+          "title": "status"
+        }
+      },
+      "title": "获取玩家信息响应"
+    },
+    "player_typesPlayerLoginRequest": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "title": "电话"
+        },
+        "password": {
+          "type": "string",
+          "title": "密码"
+        }
+      },
+      "title": "玩家登录请求"
+    },
+    "player_typesPlayerLoginResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "title": "hall use token"
+        }
+      },
+      "title": "玩家登录响应"
+    },
+    "player_typesPlayerMatchRequest": {
+      "type": "object",
+      "properties": {
+        "gameID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "game id"
+        },
+        "roomID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "room id"
+        }
+      },
+      "title": "玩家匹配请求"
+    },
+    "player_typesPlayerMatchResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/model_playerStatus",
+          "title": "status"
+        },
+        "token": {
+          "type": "string",
+          "title": "token"
+        },
+        "note": {
+          "type": "string",
+          "title": "note"
+        },
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "玩家匹配响应"
+    },
+    "player_typesPlayerRechargeRequest": {
+      "type": "object",
+      "properties": {
+        "playerID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "充值玩家id"
+        },
+        "balance": {
+          "type": "string",
+          "format": "int64",
+          "title": "充值的金币"
+        }
+      },
+      "title": "玩家充值金币请求"
+    },
+    "player_typesPlayerRechargeResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "玩家充值金币响应"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "room_typesAddGameRoomPoolsRequest": {
+      "type": "object",
+      "properties": {
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "血池名称"
+        }
+      },
+      "title": "添加游戏房间血池"
+    },
+    "room_typesAddGameRoomPoolsResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      }
+    },
+    "room_typesAddGameRoomRequest": {
+      "type": "object",
+      "properties": {
+        "roomID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "房间ID"
+        },
+        "gameID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "游戏ID"
+        },
+        "level": {
+          "type": "integer",
+          "format": "int32",
+          "title": "房间等级"
+        },
+        "name": {
+          "type": "string",
+          "title": "游戏房间名称"
+        },
+        "rate": {
+          "type": "integer",
+          "format": "int64",
+          "title": "房间明税率"
+        },
+        "entranceRestrictions": {
+          "type": "integer",
+          "format": "int64",
+          "title": "入场限制"
+        },
+        "bottomNote": {
+          "type": "integer",
+          "format": "int32",
+          "title": "底注"
+        },
+        "adviceConfig": {
+          "type": "string",
+          "title": "高级配置"
+        },
+        "pointStatus": {
+          "type": "integer",
+          "format": "int32",
+          "title": "点控状态"
+        },
+        "maxPeople": {
+          "type": "integer",
+          "format": "int32",
+          "title": "最大人数"
+        },
+        "minPeople": {
+          "type": "integer",
+          "format": "int32",
+          "title": "最小开赛人数"
+        },
+        "isAllowClose": {
+          "type": "boolean",
+          "title": "是否允许关闭"
+        },
+        "isOpenAiRobot": {
+          "type": "boolean",
+          "title": "是否开启机器人"
+        },
+        "isOpenCrossPlatformMatch": {
+          "type": "boolean",
+          "title": "是否开启跨业主匹配"
+        },
+        "allowPlatformID": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "title": "允许的平台"
+        },
+        "isAllowAutoCreateTable": {
+          "type": "boolean",
+          "title": "是否允许自动创建桌子"
+        },
+        "robot": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/model_roomRobotConfig"
+          },
+          "title": "机器人配置"
+        },
+        "robotMaxBalance": {
+          "type": "integer",
+          "format": "int64",
+          "title": "最大金额"
+        },
+        "robotMinBalance": {
+          "type": "integer",
+          "format": "int64",
+          "title": "最小金额"
+        }
+      },
+      "title": "添加业主游戏房间请求"
+    },
+    "room_typesAddGameRoomResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "添加业主游戏房间响应"
+    },
+    "room_typesAddGameRoomsRequest": {
+      "type": "object",
+      "properties": {
+        "rooms": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/room_typesAddGameRoomRequest"
+          }
+        }
+      },
+      "title": "批量添加业主游戏房间请求"
+    },
+    "room_typesAddGameRoomsResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "批量添加业主游戏房间响应"
+    },
+    "room_typesBindGameRoomPoolRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "title": "血池 ID"
+        },
+        "roomID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "房间ID"
+        }
+      },
+      "title": "绑定游戏房间血池请求"
+    },
+    "room_typesBindGameRoomPoolResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "绑定游戏房间血池响应"
+    },
+    "room_typesCloseGameRoomResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "关闭游戏房间响应"
+    },
+    "room_typesDeleteGameRoomPoolResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "删除游戏房间血池响应"
+    },
+    "room_typesFindGameRoomPoolResponse": {
+      "type": "object",
+      "properties": {
+        "roomPool": {
+          "$ref": "#/definitions/model_roomRoomPool",
+          "title": "血池信息"
+        }
+      },
+      "title": "查询游戏血池响应"
+    },
+    "room_typesFindGameRoomPoolsResponse": {
+      "type": "object",
+      "properties": {
+        "roomPools": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/model_roomRoomPool"
+          },
+          "title": "血池信息"
+        }
+      },
+      "title": "查询游戏血池列表响应"
+    },
+    "room_typesFindGameRoomResponse": {
+      "type": "object",
+      "properties": {
+        "Room": {
+          "$ref": "#/definitions/model_roomRoom"
+        }
+      },
+      "title": "查询房间信息响应"
+    },
+    "room_typesFindGameRoomsResponse": {
+      "type": "object",
+      "properties": {
+        "Rooms": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/model_roomRoom"
+          }
+        }
+      },
+      "title": "查询游戏房间列表响应"
+    },
+    "room_typesOpenGameRoomRequest": {
+      "type": "object",
+      "properties": {
+        "roomID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "房间ID"
+        }
+      },
+      "title": "开启游戏房间请求"
+    },
+    "room_typesOpenGameRoomResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "开启游戏房间响应"
+    },
+    "room_typesUnboundGameRoomPoolRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "title": "血池 ID"
+        },
+        "roomID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "房间ID"
+        }
+      },
+      "title": "解绑游戏房间血池请求"
+    },
+    "room_typesUnboundGameRoomPoolResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "解绑游戏房间血池响应"
+    }
+  },
+  "securityDefinitions": {
+    "Authorization": {
+      "type": "apiKey",
+      "description": "Authentication token, prefixed by Bearer: Bearer \u003ctoken\u003e",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "Authorization": []
+    }
+  ]
+}

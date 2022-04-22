@@ -1,0 +1,82 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: influxdb
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: influxdb
+  namespace: influxdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: influxdb  
+  template:
+    metadata:
+      labels:
+        name: influxdb
+    spec:
+      containers:
+      - name: influxdb
+        image: influxdb:1.8.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8086
+          protocol: TCP
+        # volumeMounts:
+        # - mountPath: /var/lib/influxdb
+        #   name: influxdata
+        env:
+        - name: NFLUXDB_REPORTING_DISABLED
+          value: "true"
+        - name: INFLUXDB_HTTP_FLUX_ENABLED
+          value: "false"
+        - name: INFLUXDB_HTTP_LOG_ENABLED
+          value: "false"
+        - name: INFLUXDB_HTTP_ACCESS_LOG_PATH
+          value: "/var/lib/influxdb/influxdb_http.log"
+        - name: INFLUXDB_RETENTION_ENABLED
+          value: "true"
+        - name: INFLUXDB_RETENTION_CHECK_INTERVAL
+          value: "8h"
+        - name: INFLUXDB_DB
+          value: "iot"
+        - name: TZ
+          value: Asia/Shanghai
+      # volumes:
+      # - name: influxdata
+      #   persistentVolumeClaim:
+      #     claimName: influx-data
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: influxdb
+  namespace: influxdb
+  labels:
+    name: influxdb
+spec:
+  type: NodePort
+  ports:
+  - protocol: TCP
+    nodePort:  31523
+    targetPort: 8086
+    port: 8086
+  selector:
+    name: influxdb
+# ---
+# kind: PersistentVolumeClaim
+# apiVersion: v1
+# metadata:
+#  name: influx-data
+#  namespace: iot-influxdb
+# spec:
+#  accessModes:
+#    - ReadWriteMany
+#  resources:
+#    requests:
+#      storage: 10Gi

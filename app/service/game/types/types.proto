@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package game_types;
+
+option go_package = "github.com/kubegames/kubegames-hall/app/service/game/types"; 
+
+import "app/lib/gogo/protobuf/gogo.proto";
+import "app/model/game/game.proto";
+
+//option (gogoproto.gostring_all) = true;  
+option (gogoproto.equal_all) = true;  
+option (gogoproto.verbose_equal_all) = true; 
+option (gogoproto.marshaler_all) = true;  
+option (gogoproto.sizer_all) = true;  
+option (gogoproto.unmarshaler_all) = true;  
+option (gogoproto.goproto_getters_all) = false;  
+
+//添加游戏请求
+message AddGameRequest {
+  //游戏ID
+  uint32 gameID = 1 [(gogoproto.moretags) = "binding:\"required\""];
+  //游戏名称
+  string name = 2 [(gogoproto.moretags) = "binding:\"required\""];
+  //房间配置
+  GameConfig config = 3 [(gogoproto.moretags) = "binding:\"required\""];
+}
+
+//游戏配置请求
+message GameConfig {
+  //游戏大厅地址
+  string platform = 1 [(gogoproto.moretags) = "binding:\"required\""];
+  //最多进入人数
+  uint32 maxPeople = 2 [(gogoproto.moretags) = "binding:\"required\""];
+  //运行模式
+  string runmode = 3;
+}
+
+//添加游戏响应
+message AddGameResponse {
+  //success
+  bool success = 1;
+}
+
+//启动游戏服务请求
+message StartGameRequest {
+  //游戏ID
+  uint32 gameID = 1 [(gogoproto.moretags) = "binding:\"required\""];
+  //镜像
+  string image = 2 [(gogoproto.moretags) = "binding:\"required\""];
+  //运行副本数
+  uint32 replicas = 3 [(gogoproto.moretags) = "binding:\"required\""];
+  //端口 
+  uint32 port = 4 [(gogoproto.moretags) = "binding:\"required\""];
+  //启动命令
+  repeated string commonds = 6;
+  //最大可用 cpu (1000 = 1cpu)
+  uint32 cpu = 7;
+  //最大可用内存 memory (1=1Mi)
+  uint32 memory = 8;
+}
+
+//启动游戏响应
+message StartGameResponse {
+  //success
+  bool success = 1;
+}
+
+//关闭游戏请求
+message CloseGameRequest {
+  //游戏ID
+  uint32 gameID = 1 [(gogoproto.moretags) = "uri:\"gameID\" binding:\"required\""];
+}
+
+//关闭游戏响应
+message CloseGameResponse {
+  //success
+  bool success = 1;
+}
+
+//查询游戏请求
+message FindGameRequest {
+  //游戏ID
+  uint32 gameID = 1 [(gogoproto.moretags) = "uri:\"gameID\" binding:\"required\""];
+}
+
+//查询游戏响应
+message FindGameResponse {
+  model_game.Game Game = 1;
+}
+
+//查询游戏列表
+message FindGamesRequest {
+}
+
+//查询游戏列表响应
+message FindGamesResponse {
+  repeated model_game.Game Games = 1;
+}

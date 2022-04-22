@@ -1,0 +1,443 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "kubegames game game api swagger swagger",
+    "version": "1.0",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "tags": [
+    {
+      "name": "GameService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/game/v1/add": {
+      "post": {
+        "summary": "添加游戏",
+        "operationId": "GameService_AddGameRequest",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/game_typesAddGameResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/game_typesAddGameRequest"
+            }
+          }
+        ],
+        "tags": [
+          "GameService"
+        ]
+      }
+    },
+    "/game/v1/close/{gameID}": {
+      "delete": {
+        "summary": "关闭游戏服务",
+        "operationId": "GameService_CloseGame",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/game_typesCloseGameResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "gameID",
+            "description": "游戏ID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "GameService"
+        ]
+      }
+    },
+    "/game/v1/find/{gameID}": {
+      "get": {
+        "summary": "查找游戏服务",
+        "operationId": "GameService_FindGame",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/game_typesFindGameResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "gameID",
+            "description": "游戏ID",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "GameService"
+        ]
+      }
+    },
+    "/game/v1/finds": {
+      "get": {
+        "summary": "查找游戏服务",
+        "operationId": "GameService_FindGames",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/game_typesFindGamesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "GameService"
+        ]
+      }
+    },
+    "/game/v1/start": {
+      "post": {
+        "summary": "启动游戏服务",
+        "operationId": "GameService_StartGame",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/game_typesStartGameResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/game_typesStartGameRequest"
+            }
+          }
+        ],
+        "tags": [
+          "GameService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "game_typesAddGameRequest": {
+      "type": "object",
+      "properties": {
+        "gameID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "游戏ID"
+        },
+        "name": {
+          "type": "string",
+          "title": "游戏名称"
+        },
+        "config": {
+          "$ref": "#/definitions/game_typesGameConfig",
+          "title": "房间配置"
+        }
+      },
+      "title": "添加游戏请求"
+    },
+    "game_typesAddGameResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "添加游戏响应"
+    },
+    "game_typesCloseGameResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "关闭游戏响应"
+    },
+    "game_typesFindGameResponse": {
+      "type": "object",
+      "properties": {
+        "Game": {
+          "$ref": "#/definitions/model_gameGame"
+        }
+      },
+      "title": "查询游戏响应"
+    },
+    "game_typesFindGamesResponse": {
+      "type": "object",
+      "properties": {
+        "Games": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/model_gameGame"
+          }
+        }
+      },
+      "title": "查询游戏列表响应"
+    },
+    "game_typesGameConfig": {
+      "type": "object",
+      "properties": {
+        "platform": {
+          "type": "string",
+          "title": "游戏大厅地址"
+        },
+        "maxPeople": {
+          "type": "integer",
+          "format": "int64",
+          "title": "最多进入人数"
+        },
+        "runmode": {
+          "type": "string",
+          "title": "运行模式"
+        }
+      },
+      "title": "游戏配置请求"
+    },
+    "game_typesStartGameRequest": {
+      "type": "object",
+      "properties": {
+        "gameID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "游戏ID"
+        },
+        "image": {
+          "type": "string",
+          "title": "镜像"
+        },
+        "replicas": {
+          "type": "integer",
+          "format": "int64",
+          "title": "运行副本数"
+        },
+        "port": {
+          "type": "integer",
+          "format": "int64",
+          "title": "端口"
+        },
+        "commonds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "启动命令"
+        },
+        "cpu": {
+          "type": "integer",
+          "format": "int64",
+          "title": "最大可用 cpu (1000 = 1cpu)"
+        },
+        "memory": {
+          "type": "integer",
+          "format": "int64",
+          "title": "最大可用内存 memory (1=1Mi)"
+        }
+      },
+      "title": "启动游戏服务请求"
+    },
+    "game_typesStartGameResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "启动游戏响应"
+    },
+    "model_gameGame": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64",
+          "title": "自增ID"
+        },
+        "gameID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "游戏ID"
+        },
+        "name": {
+          "type": "string",
+          "title": "游戏名称"
+        },
+        "status": {
+          "type": "boolean",
+          "title": "状态"
+        },
+        "image": {
+          "type": "string",
+          "title": "镜像"
+        },
+        "replicas": {
+          "type": "integer",
+          "format": "int64",
+          "title": "运行副本数"
+        },
+        "port": {
+          "type": "integer",
+          "format": "int64",
+          "title": "端口"
+        },
+        "commonds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "启动命令"
+        },
+        "cpu": {
+          "type": "integer",
+          "format": "int64",
+          "title": "最大可用 cpu (1000 = 1cpu)"
+        },
+        "memory": {
+          "type": "integer",
+          "format": "int64",
+          "title": "最大可用内存 memory (1=1Mi)"
+        },
+        "config": {
+          "$ref": "#/definitions/model_gameGameConfig",
+          "title": "游戏篇日志"
+        }
+      },
+      "title": "游戏基础信息"
+    },
+    "model_gameGameConfig": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64",
+          "title": "自增ID"
+        },
+        "name": {
+          "type": "string",
+          "title": "游戏名称"
+        },
+        "gameID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "游戏ID"
+        },
+        "platform": {
+          "type": "string",
+          "title": "游戏平台地址"
+        },
+        "maxPeople": {
+          "type": "integer",
+          "format": "int64",
+          "title": "最多进入人数"
+        },
+        "runmode": {
+          "type": "string",
+          "title": "运行模式"
+        }
+      },
+      "title": "游戏配置"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Authorization": {
+      "type": "apiKey",
+      "description": "Authentication token, prefixed by Bearer: Bearer \u003ctoken\u003e",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "Authorization": []
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package player_types;
+
+option go_package = "github.com/kubegames/kubegames-hall/app/service/player/types"; 
+
+import "app/lib/gogo/protobuf/gogo.proto";
+import "app/model/player/player.proto";
+
+//option (gogoproto.gostring_all) = true;  
+option (gogoproto.equal_all) = true;  
+option (gogoproto.verbose_equal_all) = true; 
+option (gogoproto.marshaler_all) = true;  
+option (gogoproto.sizer_all) = true;  
+option (gogoproto.unmarshaler_all) = true;  
+option (gogoproto.goproto_getters_all) = false;  
+
+//玩家登录请求
+message PlayerLoginRequest {
+  //电话
+  string phone = 1 [(gogoproto.moretags) = "binding:\"required\""];
+  //密码
+  string password = 2 [(gogoproto.moretags) = "binding:\"required\""];
+}
+
+//玩家登录响应
+message PlayerLoginResponse {
+  //hall use token
+  string token = 1;
+}
+
+//获取玩家信息请求
+message PlayerInfoRequest {
+}
+
+//获取玩家信息响应
+message PlayerInfoResponse {
+  //player info
+  model_player.Player playerInfo = 1;
+  //status
+  model_player.Status status = 2;
+}
+
+//玩家匹配请求
+message PlayerMatchRequest {
+  //game id
+  uint32 gameID = 1 [(gogoproto.moretags) = "binding:\"required\""];
+  //room id
+  uint32 roomID = 2 [(gogoproto.moretags) = "binding:\"required\""];
+}
+
+//玩家匹配响应
+message PlayerMatchResponse {
+  //status
+  model_player.Status status = 1;
+  //token
+  string token = 2;
+  //note
+  string note = 3;
+  //success
+  bool success = 4;
+}
+
+//玩家充值金币请求
+message PlayerRechargeRequest{
+  //充值玩家id
+  uint32 playerID = 1 [(gogoproto.moretags) = "binding:\"required\""];
+  //充值的金币
+  int64 balance = 2 [(gogoproto.moretags) = "binding:\"required\""];
+}
+
+//玩家充值金币响应
+message PlayerRechargeResponse{
+  //success
+  bool success = 1;
+}
+
+//玩家赠送金币请求
+message PlayerGiveRequest{
+  //赠送玩家id
+  uint32 playerID = 1 [(gogoproto.moretags) = "binding:\"required\""];
+  //赠送的金币
+  int64 balance = 2 [(gogoproto.moretags) = "binding:\"required\""];
+}
+
+//玩家赠送金币响应
+message PlayerGiveResponse{
+  //success
+  bool success = 1;
+}

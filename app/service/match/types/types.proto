@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package match_types;
+
+option go_package = "github.com/kubegames/kubegames-hall/app/service/match/types"; 
+
+import "app/lib/gogo/protobuf/gogo.proto";
+import "app/model/player/player.proto";
+
+option (gogoproto.gostring_all) = true;  
+option (gogoproto.equal_all) = true;  
+option (gogoproto.verbose_equal_all) = true;  
+option (gogoproto.marshaler_all) = true;  
+option (gogoproto.sizer_all) = true;  
+option (gogoproto.unmarshaler_all) = true;  
+option (gogoproto.goproto_getters_all) = false;  
+
+
+message MatchRequest {
+	//游戏 ID
+	uint32 gameID = 1 [(gogoproto.moretags) = "form:\"gameID\" binding:\"required\""];
+	//房间 ID
+	uint32 roomID = 2 [(gogoproto.moretags) = "form:\"roomID\" binding:\"required\""];
+	//匹配玩家信息
+	model_player.Player player = 3 [(gogoproto.moretags) = "form:\"player\" binding:\"required\""];
+	//玩家使用 token
+	string token = 4;
+}
+
+message MatchResponse {
+	//success
+	bool success = 1;
+	//note
+	string note = 2;
+	//is stop
+	bool stop = 3;
+	//jwt token
+	string token = 9;
+	//game server connect url
+	string url = 10;
+	//custom matching must be set
+	string podName = 11;
+	//custom matching must be set
+	string podIp = 12;
+}
+
+message PingRequest{
+}
+
+message PingResponse{
+	bool success = 1;
+}

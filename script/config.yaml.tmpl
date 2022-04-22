@@ -1,0 +1,121 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kubegames
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubegames-config
+  namespace: kubegames
+data:
+  config.ini: |
+    [ReadMysql]
+    DbIp=#####
+    DbPwd=#####
+    DbUser=#####
+    Database=#####
+    OpenLog=true
+
+    [WriteMysql]
+    DbIp=#####
+    DbPwd=#####
+    DbUser=#####
+    Database=#####
+    OpenLog=true
+
+    [NatsCfg]
+    Nats=nats://nats-io.nats.svc:4222
+
+    [NsqCfg]
+    Nsqlookupd=nsqlookupd.nsq.svc:4161
+
+    [RedisCfg]
+    Addr=redis.default.svc:6379
+    DB=0
+    PoolSize=5
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: kubegames
+  name: player
+  annotations:
+    proxy: eyJQcm94eVBhdHRlcm4iOiJTZXJ2aWNlIiwiSXRlbXMiOlt7Ik1ldGhvZCI6IkFueSIsIkFnZW50VXJsIjoiL3BsYXllciIsIlByb3h5VXJsIjoiL3BsYXllciIsIlBvcnQiOjg0MzN9XX0=
+spec:
+  type: ClusterIP
+  selector:
+    app: player
+  ports:
+  - protocol: TCP
+    port: 8433
+    targetPort: 8433
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: kubegames
+  name: room
+  annotations:
+    proxy: eyJQcm94eVBhdHRlcm4iOiJTZXJ2aWNlIiwiSXRlbXMiOlt7Ik1ldGhvZCI6IkFueSIsIkFnZW50VXJsIjoiL3Jvb20iLCJQcm94eVVybCI6Ii9yb29tIiwiUG9ydCI6ODQzM31dfQ==
+spec:
+  type: ClusterIP
+  selector:
+    app: room
+  ports:
+  - protocol: TCP
+    port: 8433
+    targetPort: 8433
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: kubegames
+  name: platform
+  annotations:
+    proxy: eyJQcm94eVBhdHRlcm4iOiJTZXJ2aWNlIiwiSXRlbXMiOlt7Ik1ldGhvZCI6IkFueSIsIkFnZW50VXJsIjoiL3BsYXRmb3JtIiwiUHJveHlVcmwiOiIvcGxhdGZvcm0iLCJQb3J0Ijo4NDMzfV19
+spec:
+  type: ClusterIP
+  selector:
+    app: platform
+  ports:
+  - protocol: TCP
+    port: 8433
+    targetPort: 8433
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: kubegames
+  name: game
+  annotations:
+    proxy: eyJQcm94eVBhdHRlcm4iOiJTZXJ2aWNlIiwiSXRlbXMiOlt7Ik1ldGhvZCI6IkFueSIsIkFnZW50VXJsIjoiL2dhbWUiLCJQcm94eVVybCI6Ii9nYW1lIiwiUG9ydCI6ODQzM31dfQ==
+spec:
+  type: ClusterIP
+  selector:
+    app: game
+  ports:
+  - protocol: TCP
+    port: 8433
+    targetPort: 8433
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: kubegames
+  name: single
+  annotations:
+    proxy: eyJQcm94eVBhdHRlcm4iOiJTZXJ2aWNlIiwiSXRlbXMiOlt7Ik1ldGhvZCI6IkFueSIsIkFnZW50VXJsIjoiL3BsYXllciIsIlByb3h5VXJsIjoiL3BsYXllciIsIlBvcnQiOjg0MzN9LHsiTWV0aG9kIjoiQW55IiwiQWdlbnRVcmwiOiIvcGxhdGZvcm0iLCJQcm94eVVybCI6Ii9wbGF0Zm9ybSIsIlBvcnQiOjg0MzN9LHsiTWV0aG9kIjoiQW55IiwiQWdlbnRVcmwiOiIvZ2FtZSIsIlByb3h5VXJsIjoiL2dhbWUiLCJQb3J0Ijo4NDMzfSx7Ik1ldGhvZCI6IkFueSIsIkFnZW50VXJsIjoiL3Jvb20iLCJQcm94eVVybCI6Ii9yb29tIiwiUG9ydCI6ODQzM30seyJNZXRob2QiOiJBbnkiLCJBZ2VudFVybCI6Ii9zd2FnZ2VyIiwiUHJveHlVcmwiOiIvc3dhZ2dlciIsIlBvcnQiOjg0MzN9XX0=
+spec:
+  type: ClusterIP
+  selector:
+    app: single
+  ports:
+  - protocol: TCP
+    port: 8433
+    targetPort: 8433
+

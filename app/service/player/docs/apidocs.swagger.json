@@ -1,0 +1,493 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "kubegames game player api swagger",
+    "version": "1.0",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "tags": [
+    {
+      "name": "PlayerService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/player/v1/give": {
+      "post": {
+        "summary": "玩家赠送金币",
+        "operationId": "PlayerService_PlayerGive",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerGiveResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerGiveRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PlayerService"
+        ]
+      }
+    },
+    "/player/v1/info": {
+      "get": {
+        "summary": "玩家信息",
+        "operationId": "PlayerService_PlayerInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerInfoResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "PlayerService"
+        ]
+      }
+    },
+    "/player/v1/login": {
+      "post": {
+        "summary": "玩家登录",
+        "operationId": "PlayerService_PlayerLogin",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerLoginResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerLoginRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PlayerService"
+        ],
+        "security": []
+      }
+    },
+    "/player/v1/match": {
+      "post": {
+        "summary": "玩家匹配",
+        "operationId": "PlayerService_PlayerMatch",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerMatchResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerMatchRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PlayerService"
+        ]
+      }
+    },
+    "/player/v1/recharge": {
+      "post": {
+        "summary": "玩家充值金币",
+        "operationId": "PlayerService_PlayerRecharge",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerRechargeResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerRechargeRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PlayerService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "model_playerPlayer": {
+      "type": "object",
+      "properties": {
+        "playerID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "玩家 id"
+        },
+        "phone": {
+          "type": "string",
+          "title": "电话"
+        },
+        "password": {
+          "type": "string",
+          "title": "密码"
+        },
+        "balance": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户金币"
+        },
+        "chip": {
+          "type": "string",
+          "format": "int64",
+          "title": "玩家打码量"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "用户头像"
+        },
+        "nick": {
+          "type": "string",
+          "title": "用户昵称"
+        },
+        "account": {
+          "type": "string",
+          "title": "账号"
+        },
+        "equipmentCode": {
+          "type": "string",
+          "title": "设备码"
+        },
+        "platformID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "业主id"
+        },
+        "sex": {
+          "type": "integer",
+          "format": "int32",
+          "title": "性别"
+        },
+        "city": {
+          "type": "string",
+          "title": "城市"
+        },
+        "ip": {
+          "type": "string",
+          "title": "IP"
+        },
+        "sign": {
+          "type": "string",
+          "title": "签名"
+        },
+        "isRobot": {
+          "type": "boolean",
+          "title": "是否机器人"
+        },
+        "pointctl": {
+          "type": "integer",
+          "format": "int32",
+          "title": "点控概率"
+        },
+        "roomctl": {
+          "type": "integer",
+          "format": "int32",
+          "title": "血池"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32",
+          "title": "版本"
+        }
+      },
+      "title": "玩家基础信息"
+    },
+    "model_playerStatus": {
+      "type": "object",
+      "properties": {
+        "playerID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "玩家 id"
+        },
+        "gameID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "game id"
+        },
+        "roomID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "room id"
+        },
+        "podName": {
+          "type": "string",
+          "title": "game server pod name"
+        },
+        "ip": {
+          "type": "string",
+          "title": "游戏服务地址"
+        },
+        "token": {
+          "type": "string",
+          "title": "token"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32",
+          "title": "版本"
+        }
+      },
+      "title": "玩家状态"
+    },
+    "player_typesPlayerGiveRequest": {
+      "type": "object",
+      "properties": {
+        "playerID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "赠送玩家id"
+        },
+        "balance": {
+          "type": "string",
+          "format": "int64",
+          "title": "赠送的金币"
+        }
+      },
+      "title": "玩家赠送金币请求"
+    },
+    "player_typesPlayerGiveResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "玩家赠送金币响应"
+    },
+    "player_typesPlayerInfoResponse": {
+      "type": "object",
+      "properties": {
+        "playerInfo": {
+          "$ref": "#/definitions/model_playerPlayer",
+          "title": "player info"
+        },
+        "status": {
+          "$ref": "#/definitions/model_playerStatus",
+          "title": "status"
+        }
+      },
+      "title": "获取玩家信息响应"
+    },
+    "player_typesPlayerLoginRequest": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "title": "电话"
+        },
+        "password": {
+          "type": "string",
+          "title": "密码"
+        }
+      },
+      "title": "玩家登录请求"
+    },
+    "player_typesPlayerLoginResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "title": "hall use token"
+        }
+      },
+      "title": "玩家登录响应"
+    },
+    "player_typesPlayerMatchRequest": {
+      "type": "object",
+      "properties": {
+        "gameID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "game id"
+        },
+        "roomID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "room id"
+        }
+      },
+      "title": "玩家匹配请求"
+    },
+    "player_typesPlayerMatchResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/model_playerStatus",
+          "title": "status"
+        },
+        "token": {
+          "type": "string",
+          "title": "token"
+        },
+        "note": {
+          "type": "string",
+          "title": "note"
+        },
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "玩家匹配响应"
+    },
+    "player_typesPlayerRechargeRequest": {
+      "type": "object",
+      "properties": {
+        "playerID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "充值玩家id"
+        },
+        "balance": {
+          "type": "string",
+          "format": "int64",
+          "title": "充值的金币"
+        }
+      },
+      "title": "玩家充值金币请求"
+    },
+    "player_typesPlayerRechargeResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        }
+      },
+      "title": "玩家充值金币响应"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    }
+  },
+  "securityDefinitions": {
+    "Authorization": {
+      "type": "apiKey",
+      "description": "Authentication token, prefixed by Bearer: Bearer \u003ctoken\u003e",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "Authorization": []
+    }
+  ]
+}

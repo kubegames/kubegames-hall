@@ -1,0 +1,278 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/service/match/service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "MatchService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/match/v1/match": {
+      "post": {
+        "summary": "match player",
+        "operationId": "MatchService_Match",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/match_typesMatchResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/match_typesMatchRequest"
+            }
+          }
+        ],
+        "tags": [
+          "MatchService"
+        ]
+      }
+    },
+    "/match/v1/ping": {
+      "post": {
+        "summary": "Ping",
+        "operationId": "MatchService_Ping",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/match_typesPingResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/match_typesPingRequest"
+            }
+          }
+        ],
+        "tags": [
+          "MatchService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "match_typesMatchRequest": {
+      "type": "object",
+      "properties": {
+        "gameID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "游戏 ID"
+        },
+        "roomID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "房间 ID"
+        },
+        "player": {
+          "$ref": "#/definitions/model_playerPlayer",
+          "title": "匹配玩家信息"
+        },
+        "token": {
+          "type": "string",
+          "title": "玩家使用 token"
+        }
+      }
+    },
+    "match_typesMatchResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "success"
+        },
+        "note": {
+          "type": "string",
+          "title": "note"
+        },
+        "stop": {
+          "type": "boolean",
+          "title": "is stop"
+        },
+        "token": {
+          "type": "string",
+          "title": "jwt token"
+        },
+        "url": {
+          "type": "string",
+          "title": "game server connect url"
+        },
+        "podName": {
+          "type": "string",
+          "title": "custom matching must be set"
+        },
+        "podIp": {
+          "type": "string",
+          "title": "custom matching must be set"
+        }
+      }
+    },
+    "match_typesPingRequest": {
+      "type": "object"
+    },
+    "match_typesPingResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        }
+      }
+    },
+    "model_playerPlayer": {
+      "type": "object",
+      "properties": {
+        "playerID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "玩家 id"
+        },
+        "phone": {
+          "type": "string",
+          "title": "电话"
+        },
+        "password": {
+          "type": "string",
+          "title": "密码"
+        },
+        "balance": {
+          "type": "string",
+          "format": "int64",
+          "title": "用户金币"
+        },
+        "chip": {
+          "type": "string",
+          "format": "int64",
+          "title": "玩家打码量"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "用户头像"
+        },
+        "nick": {
+          "type": "string",
+          "title": "用户昵称"
+        },
+        "account": {
+          "type": "string",
+          "title": "账号"
+        },
+        "equipmentCode": {
+          "type": "string",
+          "title": "设备码"
+        },
+        "platformID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "业主id"
+        },
+        "sex": {
+          "type": "integer",
+          "format": "int32",
+          "title": "性别"
+        },
+        "city": {
+          "type": "string",
+          "title": "城市"
+        },
+        "ip": {
+          "type": "string",
+          "title": "IP"
+        },
+        "sign": {
+          "type": "string",
+          "title": "签名"
+        },
+        "isRobot": {
+          "type": "boolean",
+          "title": "是否机器人"
+        },
+        "pointctl": {
+          "type": "integer",
+          "format": "int32",
+          "title": "点控概率"
+        },
+        "roomctl": {
+          "type": "integer",
+          "format": "int32",
+          "title": "血池"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32",
+          "title": "版本"
+        }
+      },
+      "title": "玩家基础信息"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    }
+  }
+}

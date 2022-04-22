@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package model_game;
+
+option go_package = "github.com/kubegames/kubegames-hall/app/model/game"; 
+
+import "app/lib/gogo/protobuf/gogo.proto";
+
+option (gogoproto.gostring_all) = true;  
+option (gogoproto.equal_all) = true;  
+option (gogoproto.verbose_equal_all) = true; 
+option (gogoproto.marshaler_all) = true;  
+option (gogoproto.sizer_all) = true;  
+option (gogoproto.unmarshaler_all) = true;  
+option (gogoproto.goproto_getters_all) = false;  
+
+//游戏基础信息
+message Game {
+  //自增ID
+  uint64 id = 1 [(gogoproto.moretags) = "xorm:\"not null pk autoincr comment('room id') BigInt\""];
+  //游戏ID
+  uint32 gameID = 2 [(gogoproto.moretags) = "xorm:\"unique comment('游戏ID') BigInt\""];
+  //游戏名称
+  string name = 3 [(gogoproto.moretags) = "xorm:\"comment('游戏名称') Varchar(255)\""];
+  //状态
+  bool status = 4 [(gogoproto.moretags) = "xorm:\"comment('状态，false停止，true运行') Bool\""];
+  //镜像
+  string image = 5 [(gogoproto.moretags) = "xorm:\"comment('镜像') Varchar(255)\""];
+  //运行副本数
+  uint32 replicas = 6 [(gogoproto.moretags) = "xorm:\"comment('运行副本数') Int\""];
+  //端口 
+  uint32 port = 7 [(gogoproto.moretags) = "xorm:\"comment('端口') Int\""];
+  //启动命令
+  repeated string commonds = 8 [(gogoproto.moretags) = "xorm:\"comment('启动命令')\""];
+  //最大可用 cpu (1000 = 1cpu)
+  uint32 cpu = 9 [(gogoproto.moretags) = "xorm:\"comment('最大可用 cpu (1000 = 1cpu)') BigInt\""];
+  //最大可用内存 memory (1=1Mi)
+  uint32 memory = 10 [(gogoproto.moretags) = "xorm:\"comment('最大可用内存 memory (1=1Mi)') BigInt\""];
+  //游戏篇日志
+  GameConfig config = 11 [(gogoproto.moretags) = "xorm:\"-\""];
+}
+
+//游戏配置
+message GameConfig {
+  //自增ID
+  uint64 id = 1 [(gogoproto.moretags) = "xorm:\"not null pk autoincr comment('room id') BigInt\""];
+  //游戏名称
+  string name = 2 [(gogoproto.moretags) = "xorm:\"comment('游戏名称') Varchar(255)\""];
+  //游戏ID
+  uint32 gameID = 3 [(gogoproto.moretags) = "xorm:\"unique comment('游戏ID') BigInt\""];
+  //游戏平台地址
+  string platform = 4 [(gogoproto.moretags) = "xorm:\"comment('游戏平台地址') Varchar(255)\""];
+  //最多进入人数
+  uint32 maxPeople = 5 [(gogoproto.moretags) = "xorm:\"comment('最多进入人数') BigInt\""];
+  //运行模式
+  string runmode = 6 [(gogoproto.moretags) = "xorm:\"comment('运行模式') Varchar(255)\""];
+}

@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+package player_service;
+
+option go_package = "github.com/kubegames/kubegames-hall/app/service/player"; 
+
+import "app/service/player/types/types.proto";
+import "app/lib/google/api/annotations.proto";
+import "app/lib/gogo/protobuf/gogo.proto";
+import "app/lib/protoc_gen_openapiv2/options/annotations.proto";
+
+
+option (gogoproto.gostring_all) = true;  
+option (gogoproto.equal_all) = true;  
+option (gogoproto.verbose_equal_all) = true;  
+option (gogoproto.marshaler_all) = true;  
+option (gogoproto.sizer_all) = true;  
+option (gogoproto.unmarshaler_all) = true;  
+option (gogoproto.goproto_getters_all) = false;  
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+	info: {
+		title: "kubegames game player api swagger"
+		version: "1.0"
+		license: {
+			name: "MIT"			
+		}
+  }
+	security_definitions: {
+		security: {
+			key: "Authorization"
+			value: {
+				type: TYPE_API_KEY
+				in: IN_HEADER
+				name: "Authorization"
+				description: "Authentication token, prefixed by Bearer: Bearer <token>"
+			}
+		}
+	}
+	security: {
+		security_requirement: {
+			key: "Authorization"
+		}
+	}
+};
+
+//玩家服务
+service PlayerService {
+	//玩家登录
+	rpc PlayerLogin(player_types.PlayerLoginRequest) returns (player_types.PlayerLoginResponse) {
+		option (google.api.http) = {
+			post: "/player/v1/login"
+      body: "*"
+		};
+		//不使用鉴权
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			security:{}
+		};
+	}
+
+	//玩家信息
+	rpc PlayerInfo(player_types.PlayerInfoRequest) returns (player_types.PlayerInfoResponse) {
+		option (google.api.http) = {
+			get: "/player/v1/info"
+		};
+	}
+
+	//玩家匹配
+	rpc PlayerMatch(player_types.PlayerMatchRequest) returns (player_types.PlayerMatchResponse) {
+		option (google.api.http) = {
+			post: "/player/v1/match"
+      body: "*"
+		};
+	}
+
+	//玩家充值金币
+	rpc PlayerRecharge(player_types.PlayerRechargeRequest) returns (player_types.PlayerRechargeResponse) {
+		option (google.api.http) = {
+			post: "/player/v1/recharge"
+      body: "*"
+		};
+	}
+
+	//玩家赠送金币
+	rpc PlayerGive(player_types.PlayerGiveRequest) returns (player_types.PlayerGiveResponse) {
+		option (google.api.http) = {
+			post: "/player/v1/give"
+			body: "*"
+		};
+	}
+}

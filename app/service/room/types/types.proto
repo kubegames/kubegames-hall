@@ -1,0 +1,196 @@
+syntax = "proto3";
+
+package room_types;
+
+option go_package = "github.com/kubegames/kubegames-hall/app/service/room/types"; 
+
+import "app/lib/gogo/protobuf/gogo.proto";
+import "app/model/room/room.proto";
+
+//option (gogoproto.gostring_all) = true;  
+option (gogoproto.equal_all) = true;  
+option (gogoproto.verbose_equal_all) = true; 
+option (gogoproto.marshaler_all) = true;  
+option (gogoproto.sizer_all) = true;  
+option (gogoproto.unmarshaler_all) = true;  
+option (gogoproto.goproto_getters_all) = false;  
+
+//添加业主游戏房间请求
+message AddGameRoomRequest {
+  //房间ID
+  uint32 roomID = 2 [(gogoproto.moretags) = "binding:\"required\""];
+  //游戏ID
+  uint32 gameID = 3 [(gogoproto.moretags) = "binding:\"required\""];
+  //房间等级
+  int32 level = 4 [(gogoproto.moretags) = "binding:\"required\""];
+  //游戏房间名称
+  string name = 5 [(gogoproto.moretags) = "binding:\"required\""];
+  //房间明税率
+  uint32 rate = 6;
+  //入场限制
+  uint32 entranceRestrictions = 7;
+  //底注
+  int32 bottomNote = 8;
+  //高级配置
+  string adviceConfig = 9;
+  //点控状态
+  int32 pointStatus = 10;
+  //最大人数
+  int32 maxPeople = 11 [(gogoproto.moretags) = "binding:\"required\""];
+  //最小开赛人数
+  int32 minPeople = 12;
+  //是否允许关闭
+  bool isAllowClose = 13;
+  //是否开启机器人
+  bool isOpenAiRobot = 14;
+  //是否开启跨业主匹配
+  bool isOpenCrossPlatformMatch = 15;
+  //允许的平台
+  repeated uint32 allowPlatformID = 16;
+  //是否允许自动创建桌子
+  bool isAllowAutoCreateTable = 17;
+  //机器人配置
+  repeated model_room.RobotConfig robot = 18;
+  //最大金额
+  uint32 robotMaxBalance = 19 [(gogoproto.moretags) = "binding:\"required\""];
+  //最小金额
+  uint32 robotMinBalance = 20;
+}
+
+//添加业主游戏房间响应
+message AddGameRoomResponse {
+  //success
+  bool success = 1;
+}
+
+//批量添加业主游戏房间请求
+message AddGameRoomsRequest{
+  repeated AddGameRoomRequest rooms = 1;
+}
+
+//批量添加业主游戏房间响应
+message AddGameRoomsResponse {
+  //success
+  bool success = 1;
+}
+
+//开启游戏房间请求
+message OpenGameRoomRequest {
+  //房间ID
+  uint32 roomID = 1 [(gogoproto.moretags) = "binding:\"required\""];
+}
+
+//开启游戏房间响应
+message OpenGameRoomResponse {
+  //success
+  bool success = 1;
+}
+
+//关闭游戏房间请求
+message CloseGameRoomRequest {
+  //房间ID
+  uint32 roomID = 1 [(gogoproto.moretags) = "uri:\"roomID\" binding:\"required\""];
+}
+
+//关闭游戏房间响应
+message CloseGameRoomResponse {
+  //success
+  bool success = 1;
+}
+
+//查询房间信息请求
+message FindGameRoomRequest {
+  // 房间 ID
+  uint32 roomID = 1 [(gogoproto.moretags) = "uri:\"roomID\" binding:\"required\""];
+}
+
+//查询房间信息响应
+message FindGameRoomResponse {
+  model_room.Room Room = 1;
+}
+
+//查询游戏房间列表请求
+message FindGameRoomsRequest {
+  //游戏ID
+  uint32 gameID = 1 [(gogoproto.moretags) = "uri:\"gameID\" binding:\"required\""];
+  //房间状态 0全部 1关闭 2开启
+  int32 status = 2 [(gogoproto.moretags) = "uri:\"status\""];
+}
+
+//查询游戏房间列表响应
+message FindGameRoomsResponse {
+  repeated model_room.Room Rooms = 1;
+}
+
+// 添加游戏房间血池
+message AddGameRoomPoolsRequest{
+  //血池名称
+  repeated string names = 1 [(gogoproto.moretags) = "uri:\"name\" binding:\"required\""];
+}
+
+message AddGameRoomPoolsResponse{
+  //success
+  bool success = 1;
+}
+
+//绑定游戏房间血池请求
+message BindGameRoomPoolRequest{
+  //血池 ID
+  uint32 id = 1 [(gogoproto.moretags) = "uri:\"id\" binding:\"required\""];
+  //房间ID
+  uint32 roomID = 2 [(gogoproto.moretags) = "binding:\"required\""];
+}
+
+//绑定游戏房间血池响应
+message BindGameRoomPoolResponse{
+  //success
+  bool success = 1;
+}
+
+//解绑游戏房间血池请求
+message UnboundGameRoomPoolRequest{
+  //血池 ID
+  uint32 id = 1 [(gogoproto.moretags) = "uri:\"id\" binding:\"required\""];
+  //房间ID
+  uint32 roomID = 2 [(gogoproto.moretags) = "binding:\"required\""];
+}
+
+//解绑游戏房间血池响应
+message UnboundGameRoomPoolResponse{
+  //success
+  bool success = 1;
+}
+
+//删除游戏房间血池请求
+message DeleteGameRoomPoolRequest{
+  //血池 ID
+  uint32 id = 1 [(gogoproto.moretags) = "uri:\"id\" binding:\"required\""];
+}
+
+//删除游戏房间血池响应
+message DeleteGameRoomPoolResponse{
+  //success
+  bool success = 1;
+}
+
+//查询游戏血池列表请求
+message FindGameRoomPoolsRequest{
+}
+
+//查询游戏血池列表响应
+message FindGameRoomPoolsResponse{
+  //血池信息
+  repeated model_room.RoomPool roomPools = 1;
+}
+
+//查询游戏血池请求
+message FindGameRoomPoolRequest{
+  //血池 ID
+  uint32 id = 1 [(gogoproto.moretags) = "uri:\"id\" binding:\"required\""];
+}
+
+//查询游戏血池响应
+message FindGameRoomPoolResponse{
+  //血池信息
+  model_room.RoomPool roomPool = 1;
+}

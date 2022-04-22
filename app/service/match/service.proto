@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package service_match;
+
+option go_package = "github.com/kubegames/kubegames-hall/app/service/match"; 
+
+import "app/service/match/types/types.proto";
+import "app/lib/google/api/annotations.proto";
+import "app/lib/gogo/protobuf/gogo.proto";
+
+option (gogoproto.gostring_all) = true;  
+option (gogoproto.equal_all) = true;  
+option (gogoproto.verbose_equal_all) = true;  
+option (gogoproto.marshaler_all) = true;  
+option (gogoproto.sizer_all) = true;  
+option (gogoproto.unmarshaler_all) = true;  
+option (gogoproto.goproto_getters_all) = false;  
+
+// match api service
+service MatchService {
+	//match player
+	rpc Match(match_types.MatchRequest) returns (match_types.MatchResponse) {
+		option (google.api.http) = {
+			post: "/match/v1/match"
+      body: "*"
+		};
+	}
+
+	//Ping
+	rpc Ping(match_types.PingRequest) returns (match_types.PingResponse) {
+		option (google.api.http) = {
+			post: "/match/v1/ping"
+      body: "*"
+		};
+	}
+}

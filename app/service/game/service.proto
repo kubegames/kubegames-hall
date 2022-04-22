@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package game_service;
+
+option go_package = "github.com/kubegames/kubegames-hall/app/service/game"; 
+
+import "app/service/game/types/types.proto";
+import "app/lib/google/api/annotations.proto";
+import "app/lib/gogo/protobuf/gogo.proto";
+import "app/lib/protoc_gen_openapiv2/options/annotations.proto";
+
+option (gogoproto.gostring_all) = true;  
+option (gogoproto.equal_all) = true;  
+option (gogoproto.verbose_equal_all) = true;  
+option (gogoproto.marshaler_all) = true;  
+option (gogoproto.sizer_all) = true;  
+option (gogoproto.unmarshaler_all) = true;  
+option (gogoproto.goproto_getters_all) = false;  
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+	info: {
+		title: "kubegames game game api swagger swagger"
+		version: "1.0"
+		license: {
+			name: "MIT"			
+		}
+  }
+	security_definitions: {
+		security: {
+			key: "Authorization"
+			value: {
+				type: TYPE_API_KEY
+				in: IN_HEADER
+				name: "Authorization"
+				description: "Authentication token, prefixed by Bearer: Bearer <token>"
+			}
+		}
+	}
+	security: {
+		security_requirement: {
+			key: "Authorization"
+		}
+	}
+};
+
+// hall game api service
+service GameService {
+	//添加游戏
+	rpc AddGameRequest(game_types.AddGameRequest) returns (game_types.AddGameResponse) {
+		option (google.api.http) = {
+			post: "/game/v1/add"
+      body: "*"
+		};
+	}
+
+	//启动游戏服务
+	rpc StartGame(game_types.StartGameRequest) returns (game_types.StartGameResponse) {
+		option (google.api.http) = {
+			post: "/game/v1/start"
+      body: "*"
+		};
+	}
+
+	//关闭游戏服务
+	rpc CloseGame(game_types.CloseGameRequest) returns (game_types.CloseGameResponse) {
+		option (google.api.http) = {
+			delete: "/game/v1/close/{gameID}"
+		};
+	}
+
+	//查找游戏服务
+	rpc FindGame(game_types.FindGameRequest) returns (game_types.FindGameResponse) {
+		option (google.api.http) = {
+			get: "/game/v1/find/{gameID}"
+		};
+	}
+
+	//查找游戏服务
+	rpc FindGames(game_types.FindGamesRequest) returns (game_types.FindGamesResponse) {
+		option (google.api.http) = {
+			get: "/game/v1/finds"
+		};
+	}
+}

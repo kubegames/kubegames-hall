@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: kubegames
+  name: room
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: room
+  template:
+    metadata:
+      labels:
+        app: room
+    spec:
+      containers:
+      - name: game
+        image: kubegames/room:latest
+        imagePullPolicy: IfNotPresent
+        command:
+        - "bin/sh"
+        - "-c"
+        - "./room -k=/home/kube.config -p=8433 -c=config/config.ini"
+        volumeMounts:
+        - mountPath: /config
+          name: kubegames-config
+        - mountPath: /home/kube.config
+          name: k8s-client-config
+          subPath: kube.config
+      volumes:
+        - configMap:
+            name: kubegames-config
+          name: kubegames-config
+        - configMap:
+            defaultMode: 420
+            name: k8s-client-config
+          name: k8s-client-config

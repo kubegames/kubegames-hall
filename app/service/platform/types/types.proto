@@ -1,0 +1,165 @@
+syntax = "proto3";
+
+package platform_types;
+
+option go_package = "github.com/kubegames/kubegames-hall/app/service/platform/types"; 
+
+import "app/lib/gogo/protobuf/gogo.proto";
+import "app/model/player/player.proto";
+import "app/model/room/room.proto";
+
+//option (gogoproto.gostring_all) = true;  
+option (gogoproto.equal_all) = true;  
+option (gogoproto.verbose_equal_all) = true; 
+option (gogoproto.marshaler_all) = true;  
+option (gogoproto.sizer_all) = true;  
+option (gogoproto.unmarshaler_all) = true;  
+option (gogoproto.goproto_getters_all) = false;  
+
+//广播消息请求
+message BroadcastRequest{
+  bytes buff = 1;
+}
+
+//广播消息响应
+message BroadcastResponse{
+  bool success = 2;
+}
+
+//玩家离开游戏请求
+message PlayerLeaveGameRequest {
+  // 玩家 ID
+  uint32 playerID = 1 [(gogoproto.moretags) = "uri:\"playerID\" binding:\"required\""];
+  // 是否是机器人
+  bool isRobot = 2;
+}
+
+//玩家离开游戏响应
+message PlayerLeaveGameResponse {
+  //success
+  bool success = 1;
+}
+
+//申请机器人请求
+message ApplyRobotRequest {
+  //进入
+  int64 entrancerestrictions = 1 [(gogoproto.moretags) = "uri:\"entrancerestrictions\" binding:\"required\""];
+  //游戏 ID
+  uint32 gameID = 2 [(gogoproto.moretags) = "uri:\"gameID\" binding:\"required\""];
+  //房间 ID
+  uint32 roomID = 3 [(gogoproto.moretags) = "uri:\"roomID\" binding:\"required\""];
+  //机器人数量
+  uint32 number = 4 [(gogoproto.moretags) = "uri:\"number\" binding:\"required\""];
+  //最大金额
+  int64 maxBalance = 5 [(gogoproto.moretags) = "uri:\"maxBalance\" binding:\"required\""];
+  //最小金额
+  int64 minBalance = 6;
+}
+
+//申请机器人响应
+message ApplyRobotResponse {
+  //游戏 ID
+	uint32 gameID = 1;
+	//房间 ID
+	uint32 roomID = 2;
+  //机器人信息
+  repeated RobotInfo list = 3;
+}
+
+//机器人信息
+message RobotInfo {
+  //匹配玩家信息
+	model_player.Player player = 3;
+	//玩家使用 token
+	string token = 4;
+}
+
+//查询游戏开启房间请求
+message FindRoomsRequest{
+  //游戏ID
+  uint32 gameID = 1 [(gogoproto.moretags) = "uri:\"gameID\" binding:\"required\""];
+}
+
+//查询游戏开启房间响应
+message FindRoomsResponse{
+  repeated model_room.Room Rooms = 1;
+}
+
+//运行房间请求
+message RunningRoomRequest{
+  //房间ID
+  uint32 roomID = 1 [(gogoproto.moretags) = "uri:\"roomID\" binding:\"required\""];
+  //ip
+  string ip = 2 [(gogoproto.moretags) = "binding:\"required\""];
+}
+
+//运行房间响应
+message RunningRoomResponse{
+  bool success = 1;
+}
+
+//抢占房间请求
+message AcquireRoomRequest{
+  //房间ID
+  uint32 roomID = 1 [(gogoproto.moretags) = "uri:\"roomID\" binding:\"required\""];
+  //ip
+  string ip = 2 [(gogoproto.moretags) = "uri:\"ip\" binding:\"required\""];
+}
+
+//抢占房间响应
+message AcquireRoomResponse{
+  bool success = 1;
+}
+
+//释放房间请求
+message ReleaseRoomRequest{
+  //房间ID
+  uint32 roomID = 1 [(gogoproto.moretags) = "uri:\"roomID\" binding:\"required\""];
+  //ip
+  string ip = 2 [(gogoproto.moretags) = "binding:\"required\""];
+}
+
+//释放房间响应
+message ReleaseRoomResponse{
+  bool success = 1;
+}
+
+//上传战绩
+message UploadPlayerRecordRequest {
+  //战绩
+  repeated model_player.PlayerRecord records = 1;
+}
+
+//上传战绩
+message UploadPlayerRecordResponse {
+  //success
+  bool success = 1;
+}
+
+//上传用户结算信息返回
+message UploadPlayerSettleInfoRequest{
+  //玩家 id
+  uint32 playerID = 1 [(gogoproto.moretags) = "uri:\"playerID\" binding:\"required\""];
+  //玩家变动金币
+  int64 balance = 2 [(gogoproto.moretags) = "uri:\"balance\" binding:\"required\""];
+  //玩家打码量
+  int64 chip = 3 [(gogoproto.moretags) = "uri:\"chip\" binding:\"required\""];
+}
+
+//上传用户结算信息响应
+message UploadPlayerSettleInfoResponse{
+  //success
+  bool success = 1;
+}
+
+//获取房间血池值请求
+message GetRoomPoolRequest{
+  //房间ID
+  uint32 roomID = 1 [(gogoproto.moretags) = "uri:\"roomID\" binding:\"required\""];
+}
+
+//获取房间血池值响应
+message GetRoomPoolResponse{
+  //房间ID
+  int64 value = 1;
+}

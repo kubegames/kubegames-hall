@@ -1,0 +1,137 @@
+syntax = "proto3";
+
+package room_service;
+
+option go_package = "github.com/kubegames/kubegames-hall/app/service/room"; 
+
+import "app/service/room/types/types.proto";
+import "app/lib/google/api/annotations.proto";
+import "app/lib/gogo/protobuf/gogo.proto";
+import "app/lib/protoc_gen_openapiv2/options/annotations.proto";
+
+option (gogoproto.gostring_all) = true;  
+option (gogoproto.equal_all) = true;  
+option (gogoproto.verbose_equal_all) = true;  
+option (gogoproto.marshaler_all) = true;  
+option (gogoproto.sizer_all) = true;  
+option (gogoproto.unmarshaler_all) = true;  
+option (gogoproto.goproto_getters_all) = false;  
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+	info: {
+		title: "kubegames game room api swagger"
+		version: "1.0"
+		license: {
+			name: "MIT"			
+		}
+  }
+	security_definitions: {
+		security: {
+			key: "Authorization"
+			value: {
+				type: TYPE_API_KEY
+				in: IN_HEADER
+				name: "Authorization"
+				description: "Authentication token, prefixed by Bearer: Bearer <token>"
+			}
+		}
+	}
+	security: {
+		security_requirement: {
+			key: "Authorization"
+		}
+	}
+};
+
+//游戏房间服务
+service RoomService {
+	//添加游戏房间
+	rpc AddGameRoom(room_types.AddGameRoomRequest) returns (room_types.AddGameRoomResponse) {
+		option (google.api.http) = {
+			post: "/room/v1/add"
+      body: "*"
+		};
+	}
+	
+	//批量添加游戏房间
+	rpc AddGameRooms(room_types.AddGameRoomsRequest) returns (room_types.AddGameRoomsResponse) {
+		option (google.api.http) = {
+			post: "/room/v1/adds"
+      body: "*"
+		};
+	}
+
+	//开启游戏房间
+	rpc OpenGameRoom(room_types.OpenGameRoomRequest) returns (room_types.OpenGameRoomResponse) {
+		option (google.api.http) = {
+			post: "/room/v1/open"
+      body: "*"
+		};
+	}
+
+	//关闭游戏房间
+	rpc CloseGameRoom(room_types.CloseGameRoomRequest) returns (room_types.CloseGameRoomResponse) {
+		option (google.api.http) = {
+			delete: "/room/v1/close/{roomID}"
+		};
+	}
+
+	//查找游戏房间列表
+	rpc FindGameRooms(room_types.FindGameRoomsRequest) returns (room_types.FindGameRoomsResponse) {
+		option (google.api.http) = {
+			get: "/room/v1/finds/{gameID}/{status}"
+		};
+	}
+	
+	//查找房间信息
+	rpc FindGameRoom(room_types.FindGameRoomRequest) returns (room_types.FindGameRoomResponse) {
+		option (google.api.http) = {
+			get: "/room/v1/find/{roomID}"
+		};
+	}
+
+	// 添加游戏房间血池
+	rpc AddGameRoomPools(room_types.AddGameRoomPoolsRequest) returns (room_types.AddGameRoomPoolsResponse) {
+		option (google.api.http) = {
+			post: "/room/pool/v1/adds"
+      body: "*"
+		};
+	}
+
+	// 绑定游戏房间血池
+	rpc BindGameRoomPool(room_types.BindGameRoomPoolRequest) returns (room_types.BindGameRoomPoolResponse) {
+		option (google.api.http) = {
+			post: "/room/pool/v1/bind"
+      body: "*"
+		};
+	}
+
+	// 解绑游戏房间血池
+	rpc UnboundGameRoomPool(room_types.UnboundGameRoomPoolRequest) returns (room_types.UnboundGameRoomPoolResponse) {
+		option (google.api.http) = {
+			post: "/room/pool/v1/unbound"
+      body: "*"
+		};
+	}
+	
+	// 删除游戏房间血池
+	rpc DeleteGameRoomPool(room_types.DeleteGameRoomPoolRequest) returns (room_types.DeleteGameRoomPoolResponse) {
+		option (google.api.http) = {
+			delete: "/room/pool/v1/{id}"
+		};
+	}
+
+	// 查询游戏血池列表
+	rpc FindGameRoomPools(room_types.FindGameRoomPoolsRequest) returns (room_types.FindGameRoomPoolsResponse) {
+		option (google.api.http) = {
+			get: "/room/pool/v1/finds"
+		};
+	}
+
+	// 查询游戏血池
+	rpc FindGameRoomPool(room_types.FindGameRoomPoolRequest) returns (room_types.FindGameRoomPoolResponse) {
+		option (google.api.http) = {
+			get: "/room/pool/v1/find/{id}"
+		};
+	}
+}

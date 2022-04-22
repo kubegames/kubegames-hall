@@ -1,0 +1,164 @@
+syntax = "proto3";
+
+package platform_service;
+
+option go_package = "github.com/kubegames/kubegames-hall/app/service/platform"; 
+
+import "app/service/platform/types/types.proto";
+import "app/lib/google/api/annotations.proto";
+import "app/lib/gogo/protobuf/gogo.proto";
+import "app/lib/protoc_gen_openapiv2/options/annotations.proto";
+
+option (gogoproto.gostring_all) = true;  
+option (gogoproto.equal_all) = true;  
+option (gogoproto.verbose_equal_all) = true;  
+option (gogoproto.marshaler_all) = true;  
+option (gogoproto.sizer_all) = true;  
+option (gogoproto.unmarshaler_all) = true;  
+option (gogoproto.goproto_getters_all) = false;  
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+	info: {
+		title: "kubegames game platform api swagger"
+		version: "1.0"
+		license: {
+			name: "MIT"			
+		}
+  }
+	security_definitions: {
+		security: {
+			key: "Authorization"
+			value: {
+				type: TYPE_API_KEY
+				in: IN_HEADER
+				name: "Authorization"
+				description: "Authentication token, prefixed by Bearer: Bearer <token>"
+			}
+		}
+	}
+	security: {
+		security_requirement: {
+			key: "Authorization"
+		}
+	}
+};
+
+
+service PlatformService {
+	//申请机器人
+	rpc ApplyRobot (platform_types.ApplyRobotRequest) returns (platform_types.ApplyRobotResponse){
+		option (google.api.http) = {
+			post: "/platform/v1/apply/robot"
+			body: "*"
+		};
+		//不使用鉴权
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			security:{}
+		};
+	};
+
+	//玩家离开游戏
+	rpc PlayerLeaveGame(platform_types.PlayerLeaveGameRequest) returns (platform_types.PlayerLeaveGameResponse) {
+		option (google.api.http) = {
+			delete: "/platform/v1/player/leave/{playerID}"
+		};
+		//不使用鉴权
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			security:{}
+		};
+	}
+
+	// 广播
+	rpc Broadcast(platform_types.BroadcastRequest) returns (platform_types.BroadcastResponse){
+		option (google.api.http) = {
+			post: "/platform/v1/broadcast"
+			body: "*"
+		};
+		//不使用鉴权
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			security:{}
+		};
+	}
+
+	//获取房间列表
+	rpc FindRooms(platform_types.FindRoomsRequest) returns (platform_types.FindRoomsResponse){
+		option (google.api.http) = {
+			get: "/platform/v1/find/rooms/{gameID}"
+		};
+		//不使用鉴权
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			security:{}
+		};
+	}
+
+	//运行房间
+	rpc RunningRoom(platform_types.RunningRoomRequest) returns (platform_types.RunningRoomResponse){
+		option (google.api.http) = {
+			post: "/platform/v1/running/room"
+			body: "*"
+		};
+		//不使用鉴权
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			security:{}
+		};
+	}
+
+	//抢占房间
+	rpc AcquireRoom(platform_types.AcquireRoomRequest) returns (platform_types.AcquireRoomResponse){
+		option (google.api.http) = {
+			post: "/platform/v1/acquire/room"
+			body: "*"
+		};
+		//不使用鉴权
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			security:{}
+		};
+	}
+
+	//释放房间
+	rpc ReleaseRoom(platform_types.ReleaseRoomRequest) returns (platform_types.ReleaseRoomResponse){
+		option (google.api.http) = {
+			put: "/platform/v1/release/room"
+			body: "*"
+		};
+		//不使用鉴权
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			security:{}
+		};
+	}
+
+	//战绩上传
+	rpc UploadPlayerRecord(platform_types.UploadPlayerRecordRequest) returns (platform_types.UploadPlayerRecordResponse) {
+		option (google.api.http) = {
+			post: "/platform/v1/upload/record"
+			body: "*"
+		};
+		//不使用鉴权
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			security:{}
+		};
+	}
+
+	//上传用户结算信息
+	rpc UploadPlayerSettleInfo(platform_types.UploadPlayerSettleInfoRequest) returns (platform_types.UploadPlayerSettleInfoResponse){
+		option (google.api.http) = {
+			post: "/platform/v1/upload/settle/info"
+			body: "*"
+		};
+		//不使用鉴权
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			security:{}
+		};
+	}	
+	
+	//获取房间血池值
+	rpc GetRoomPool(platform_types.GetRoomPoolRequest) returns (platform_types.GetRoomPoolResponse){
+		option (google.api.http) = {
+			get: "/platform/v1/get/room/pool/{roomID}"
+		};
+		//不使用鉴权
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			security:{}
+		};
+	}
+}
