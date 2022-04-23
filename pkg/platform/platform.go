@@ -41,12 +41,13 @@ func NewPlatform(mysql *mysql.Mysql, nats nats.Nats, nsq nsq.Nsq) *platformImpl 
 		new(roomModel.ServerRunRoom),
 		new(roomModel.ServerLockRoom),
 		new(playerModel.PlayerRecord),
+		new(playerModel.PlayerBill),
 	); err != nil {
 		panic(err.Error())
 	}
 
 	impl := &platformImpl{mysql: mysql, nats: nats, nsq: nsq}
-	go impl.checkLockRoom()
+	go impl.CheckServerRunRooms()
 	return impl
 }
 
@@ -67,7 +68,7 @@ func (impl *platformImpl) ping(ctx context.Context, address string) (bool, error
 }
 
 //检测房间过期释放锁
-func (impl *platformImpl) checkLockRoom() {
+func (impl *platformImpl) CheckServerRunRooms() {
 	session := impl.mysql.GetWriteEngine().NewSession()
 	defer session.Close()
 	for {
@@ -75,7 +76,7 @@ func (impl *platformImpl) checkLockRoom() {
 		time.Sleep(5 * time.Second)
 
 		//check time
-		rooms, err := roomModel.FindServerLockRooms(session)
+		rooms, err := roomModel.FindServerRunRooms(session)
 		if err != nil {
 			log.Warnf("find lock expiration rooms error %s", err.Error())
 			continue
@@ -272,10 +273,20 @@ func (impl *platformImpl) RunningRoom(ctx context.Context, request *types.Runnin
 	session := impl.mysql.GetWriteEngine().NewSession()
 	defer session.Close()
 
-	//开启房间
-	if _, err := roomModel.InsertServerRunRoom(session, roomModel.ServerRunRoom{RoomID: request.RoomID, Ip: request.Ip}); err != nil {
-		log.Errorf("insert server run room error %s", err.Error())
+	_, ok, err := roomModel.FindServerRunRoom(session, func(s *xorm.Session) *xorm.Session {
+		return s.Where("room_id = ?", request.RoomID).Where("ip = ?", request.Ip)
+	})
+	if err != nil {
+		log.Errorf("find server run room error %s", err.Error())
 		return nil, service.NewPlatformServiceError(http.StatusInternalServerError, err.Error())
+	}
+
+	//开启房间
+	if !ok {
+		if _, err := roomModel.InsertServerRunRoom(session, roomModel.ServerRunRoom{RoomID: request.RoomID, Ip: request.Ip}); err != nil {
+			log.Errorf("insert server run room error %s", err.Error())
+			return nil, service.NewPlatformServiceError(http.StatusInternalServerError, err.Error())
+		}
 	}
 	return &types.RunningRoomResponse{Success: true}, nil
 }
