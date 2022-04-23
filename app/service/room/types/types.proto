@@ -119,7 +119,7 @@ message FindGameRoomsRequest {
 
 //查询游戏房间列表响应
 message FindGameRoomsResponse {
-  repeated model_room.Room Rooms = 1;
+  repeated model_room.Room rooms = 1;
 }
 
 // 添加游戏房间血池

@@ -819,7 +819,7 @@
     "room_typesFindGameRoomsResponse": {
       "type": "object",
       "properties": {
-        "Rooms": {
+        "rooms": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/model_roomRoom"
