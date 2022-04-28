@@ -2,7 +2,10 @@ module github.com/kubegames/kubegames-hall
 
 go 1.17
 
-replace github.com/kubegames/kubegames-operator v1.0.0 => ../kubegames-operator
+replace (
+	github.com/kubegames/kubegames-operator v1.0.0 => ../kubegames-operator
+	github.com/kubegames/protobuf v1.0.0 => ../protobuf
+)
 
 require (
 	github.com/casbin/casbin/v2 v2.28.3
@@ -15,8 +18,8 @@ require (
 	github.com/golang/protobuf v1.5.2
 	github.com/gorilla/websocket v1.5.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.8.0
-	github.com/kubegames/kubegames-ctl v1.0.0
 	github.com/kubegames/kubegames-operator v1.0.0
+	github.com/kubegames/protobuf v1.0.0
 	github.com/marspere/goencrypt v1.0.4
 	github.com/nats-io/nats.go v1.13.0
 	github.com/nsqio/go-nsq v1.1.0

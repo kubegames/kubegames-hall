@@ -218,7 +218,7 @@
     "game_typesFindGameResponse": {
       "type": "object",
       "properties": {
-        "Game": {
+        "game": {
           "$ref": "#/definitions/model_gameGame"
         }
       },
@@ -227,7 +227,7 @@
     "game_typesFindGamesResponse": {
       "type": "object",
       "properties": {
-        "Games": {
+        "games": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/model_gameGame"

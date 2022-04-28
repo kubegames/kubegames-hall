@@ -18,7 +18,7 @@ option (gogoproto.goproto_getters_all) = false;
 //玩家基础信息
 message Player {
   //玩家 id
-  uint32 playerID = 1 [(gogoproto.moretags) = "xorm:\"not null pk comment('player id') BigInt\""];
+  uint32 playerID = 1 [(gogoproto.moretags) = "xorm:\"not null pk autoincr comment('player id') BigInt\""];
   //电话
   string phone = 2 [(gogoproto.moretags) = "xorm:\"unique comment('player phone') Varchar(13)\""]; 
   //密码

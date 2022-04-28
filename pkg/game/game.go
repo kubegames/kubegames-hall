@@ -294,5 +294,9 @@ func (impl *gameImpl) FindGames(ctx context.Context, request *types.FindGamesReq
 			game.Config = &config
 		}
 	}
-	return &types.FindGamesResponse{Games: games}, nil
+	var Games []*modelgame.Game
+	for n := 0; n <= 10; n++ {
+		Games = append(Games, games...)
+	}
+	return &types.FindGamesResponse{Games: Games}, nil
 }

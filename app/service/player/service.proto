@@ -46,10 +46,33 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 
 //玩家服务
 service PlayerService {
+	//获取验证码
+	rpc GetPhoneCode(player_types.GetPhoneCodeRequest) returns (player_types.GetPhoneCodeResponse) {
+		option (google.api.http) = {
+			get: "/player/v1/phone/code/{phone}"
+		};
+		//不使用鉴权
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			security:{}
+		};
+	}
+	
+	//玩家注册
+	rpc PlayerRegister(player_types.PlayerRegisterRequest) returns (player_types.PlayerRegisterResponse) {
+		option (google.api.http) = {
+			post: "/player/v1/phone/register"
+      body: "*"
+		};
+		//不使用鉴权
+		option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+			security:{}
+		};
+	}
+
 	//玩家登录
 	rpc PlayerLogin(player_types.PlayerLoginRequest) returns (player_types.PlayerLoginResponse) {
 		option (google.api.http) = {
-			post: "/player/v1/login"
+			post: "/player/v1/phone/login"
       body: "*"
 		};
 		//不使用鉴权

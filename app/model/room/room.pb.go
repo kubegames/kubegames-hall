@@ -8,7 +8,7 @@ import (
 	fmt "fmt"
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/golang/protobuf/proto"
-	github_com_kubegames_kubegames_ctl_protobuf_types "github.com/kubegames/kubegames-ctl/protobuf/types"
+	github_com_kubegames_protobuf_types "github.com/kubegames/protobuf/types"
 	_ "google.golang.org/protobuf/types/known/timestamppb"
 	io "io"
 	math "math"
@@ -1327,7 +1327,7 @@ func (m *ServerLockRoom) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	n3, err3 := github_com_kubegames_kubegames_ctl_protobuf_types.StdTimeMarshalTo(m.CreatedAt, dAtA[i-github_com_kubegames_kubegames_ctl_protobuf_types.SizeOfStdTime(m.CreatedAt):])
+	n3, err3 := github_com_kubegames_protobuf_types.StdTimeMarshalTo(m.CreatedAt, dAtA[i-github_com_kubegames_protobuf_types.SizeOfStdTime(m.CreatedAt):])
 	if err3 != nil {
 		return 0, err3
 	}
@@ -1561,7 +1561,7 @@ func (m *ServerLockRoom) Size() (n int) {
 	if l > 0 {
 		n += 1 + l + sovRoom(uint64(l))
 	}
-	l = github_com_kubegames_kubegames_ctl_protobuf_types.SizeOfStdTime(m.CreatedAt)
+	l = github_com_kubegames_protobuf_types.SizeOfStdTime(m.CreatedAt)
 	n += 1 + l + sovRoom(uint64(l))
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -2529,7 +2529,7 @@ func (m *ServerLockRoom) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if err := github_com_kubegames_kubegames_ctl_protobuf_types.StdTimeUnmarshal(&m.CreatedAt, dAtA[iNdEx:postIndex]); err != nil {
+			if err := github_com_kubegames_protobuf_types.StdTimeUnmarshal(&m.CreatedAt, dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex

@@ -14,6 +14,12 @@ type PlayerService interface {
 	//player websocket connect
 	Websocket(c *gin.Context)
 
+	//get phone code
+	GetPhoneCode(ctx context.Context, request *types.GetPhoneCodeRequest) (response *types.GetPhoneCodeResponse, err error)
+
+	//player register
+	PlayerRegister(ctx context.Context, request *types.PlayerRegisterRequest) (response *types.PlayerRegisterResponse, err error)
+
 	//player login
 	PlayerLogin(ctx context.Context, request *types.PlayerLoginRequest) (response *types.PlayerLoginResponse, err error)
 

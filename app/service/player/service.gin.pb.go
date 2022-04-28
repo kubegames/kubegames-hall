@@ -21,6 +21,8 @@ func NewPlayerServiceError(code int, format string, a ...interface{}) error {
 }
 
 type PlayerServiceHTTPServer interface {
+	GetPhoneCode(ctx context.Context, request *types.GetPhoneCodeRequest) (response *types.GetPhoneCodeResponse, err error)
+
 	PlayerGive(ctx context.Context, request *types.PlayerGiveRequest) (response *types.PlayerGiveResponse, err error)
 
 	PlayerInfo(ctx context.Context, request *types.PlayerInfoRequest) (response *types.PlayerInfoResponse, err error)
@@ -30,6 +32,8 @@ type PlayerServiceHTTPServer interface {
 	PlayerMatch(ctx context.Context, request *types.PlayerMatchRequest) (response *types.PlayerMatchResponse, err error)
 
 	PlayerRecharge(ctx context.Context, request *types.PlayerRechargeRequest) (response *types.PlayerRechargeResponse, err error)
+
+	PlayerRegister(ctx context.Context, request *types.PlayerRegisterRequest) (response *types.PlayerRegisterResponse, err error)
 }
 
 func RegisterPlayerServiceHTTPServer(r gin.IRouter, srv PlayerServiceHTTPServer) {
@@ -44,6 +48,55 @@ func RegisterPlayerServiceHTTPServer(r gin.IRouter, srv PlayerServiceHTTPServer)
 type _PlayerService struct {
 	server PlayerServiceHTTPServer
 	router gin.IRouter
+}
+
+func (s *_PlayerService) GetPhoneCode_0(ctx *gin.Context) {
+	var in types.GetPhoneCodeRequest
+
+	if err := ctx.ShouldBindUri(&in); err != nil {
+		_PlayerServiceParamsError(ctx, err)
+		return
+	}
+
+	if err := ctx.ShouldBindQuery(&in); err != nil {
+		_PlayerServiceParamsError(ctx, err)
+		return
+	}
+
+	md := metadata.New(nil)
+	for k, v := range ctx.Request.Header {
+		md.Set(k, v...)
+	}
+	newCtx := metadata.NewIncomingContext(ctx, md)
+	out, err := s.server.(PlayerServiceHTTPServer).GetPhoneCode(newCtx, &in)
+	if err != nil {
+		_PlayerServiceError(ctx, err)
+		return
+	}
+
+	_PlayerServiceSuccess(ctx, out)
+}
+
+func (s *_PlayerService) PlayerRegister_0(ctx *gin.Context) {
+	var in types.PlayerRegisterRequest
+
+	if err := ctx.ShouldBindJSON(&in); err != nil {
+		_PlayerServiceParamsError(ctx, err)
+		return
+	}
+
+	md := metadata.New(nil)
+	for k, v := range ctx.Request.Header {
+		md.Set(k, v...)
+	}
+	newCtx := metadata.NewIncomingContext(ctx, md)
+	out, err := s.server.(PlayerServiceHTTPServer).PlayerRegister(newCtx, &in)
+	if err != nil {
+		_PlayerServiceError(ctx, err)
+		return
+	}
+
+	_PlayerServiceSuccess(ctx, out)
 }
 
 func (s *_PlayerService) PlayerLogin_0(ctx *gin.Context) {
@@ -158,7 +211,11 @@ func (s *_PlayerService) PlayerGive_0(ctx *gin.Context) {
 
 func (s *_PlayerService) _RegisterService() {
 
-	s.router.Handle("POST", "/player/v1/login", s.PlayerLogin_0)
+	s.router.Handle("GET", "/player/v1/phone/code/:phone", s.GetPhoneCode_0)
+
+	s.router.Handle("POST", "/player/v1/phone/register", s.PlayerRegister_0)
+
+	s.router.Handle("POST", "/player/v1/phone/login", s.PlayerLogin_0)
 
 	s.router.Handle("GET", "/player/v1/info", s.PlayerInfo_0)
 

@@ -85,7 +85,7 @@ message FindGameRequest {
 
 //查询游戏响应
 message FindGameResponse {
-  model_game.Game Game = 1;
+  model_game.Game game = 1;
 }
 
 //查询游戏列表
@@ -94,5 +94,5 @@ message FindGamesRequest {
 
 //查询游戏列表响应
 message FindGamesResponse {
-  repeated model_game.Game Games = 1;
+  repeated model_game.Game games = 1;
 }

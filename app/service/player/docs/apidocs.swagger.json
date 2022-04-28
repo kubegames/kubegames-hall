@@ -75,7 +75,73 @@
         ]
       }
     },
-    "/player/v1/login": {
+    "/player/v1/match": {
+      "post": {
+        "summary": "玩家匹配",
+        "operationId": "PlayerService_PlayerMatch",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerMatchResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/player_typesPlayerMatchRequest"
+            }
+          }
+        ],
+        "tags": [
+          "PlayerService"
+        ]
+      }
+    },
+    "/player/v1/phone/code/{phone}": {
+      "get": {
+        "summary": "获取验证码",
+        "operationId": "PlayerService_GetPhoneCode",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/player_typesGetPhoneCodeResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "phone",
+            "description": "电话",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "PlayerService"
+        ],
+        "security": []
+      }
+    },
+    "/player/v1/phone/login": {
       "post": {
         "summary": "玩家登录",
         "operationId": "PlayerService_PlayerLogin",
@@ -109,15 +175,15 @@
         "security": []
       }
     },
-    "/player/v1/match": {
+    "/player/v1/phone/register": {
       "post": {
-        "summary": "玩家匹配",
-        "operationId": "PlayerService_PlayerMatch",
+        "summary": "玩家注册",
+        "operationId": "PlayerService_PlayerRegister",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/player_typesPlayerMatchResponse"
+              "$ref": "#/definitions/player_typesPlayerRegisterResponse"
             }
           },
           "default": {
@@ -133,13 +199,14 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/player_typesPlayerMatchRequest"
+              "$ref": "#/definitions/player_typesPlayerRegisterRequest"
             }
           }
         ],
         "tags": [
           "PlayerService"
-        ]
+        ],
+        "security": []
       }
     },
     "/player/v1/recharge": {
@@ -339,6 +406,16 @@
       },
       "title": "玩家状态"
     },
+    "player_typesGetPhoneCodeResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "获取验证码响应"
+    },
     "player_typesPlayerGiveRequest": {
       "type": "object",
       "properties": {
@@ -389,6 +466,11 @@
         "password": {
           "type": "string",
           "title": "密码"
+        },
+        "platformID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "业主id"
         }
       },
       "title": "玩家登录请求"
@@ -466,6 +548,39 @@
         }
       },
       "title": "玩家充值金币响应"
+    },
+    "player_typesPlayerRegisterRequest": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "title": "电话"
+        },
+        "password": {
+          "type": "string",
+          "title": "密码"
+        },
+        "platformID": {
+          "type": "integer",
+          "format": "int64",
+          "title": "业主id"
+        },
+        "code": {
+          "type": "string",
+          "title": "严重码"
+        }
+      },
+      "title": "玩家注册请求"
+    },
+    "player_typesPlayerRegisterResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "title": "结果"
+        }
+      },
+      "title": "玩家注册响应"
     },
     "protobufAny": {
       "type": "object",

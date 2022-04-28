@@ -15,12 +15,44 @@ option (gogoproto.sizer_all) = true;
 option (gogoproto.unmarshaler_all) = true;  
 option (gogoproto.goproto_getters_all) = false;  
 
+//获取验证码请求
+message GetPhoneCodeRequest{
+  //电话
+  string phone = 1 [(gogoproto.moretags) = "uri:\"phone\" binding:\"required\""];
+}
+
+//获取验证码响应
+message GetPhoneCodeResponse{
+  //结果
+  bool success = 1;
+}
+
+//玩家注册请求
+message PlayerRegisterRequest{
+  //电话
+  string phone = 1 [(gogoproto.moretags) = "binding:\"required\""];
+  //密码
+  string password = 2 [(gogoproto.moretags) = "binding:\"required\""];
+  //业主id
+  uint32 platformID = 3 [(gogoproto.moretags) = "binding:\"required\""];
+  //严重码
+  string code = 4 [(gogoproto.moretags) = "binding:\"required\""];
+}
+
+//玩家注册响应
+message PlayerRegisterResponse{
+  //结果
+  bool success = 1;
+}
+
 //玩家登录请求
 message PlayerLoginRequest {
   //电话
   string phone = 1 [(gogoproto.moretags) = "binding:\"required\""];
   //密码
   string password = 2 [(gogoproto.moretags) = "binding:\"required\""];
+  //业主id
+  uint32 platformID = 3 [(gogoproto.moretags) = "binding:\"required\""];
 }
 
 //玩家登录响应

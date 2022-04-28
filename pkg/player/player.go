@@ -139,6 +139,49 @@ func (impl *playerImpl) Websocket(c *gin.Context) {
 	log.Tracef("player %d platform offline", playerinfo.PlayerID)
 }
 
+//get phone code
+func (impl *playerImpl) GetPhoneCode(ctx context.Context, request *types.GetPhoneCodeRequest) (response *types.GetPhoneCodeResponse, err error) {
+	log.Infof("get phone code = 123456")
+	//create response
+	return &types.GetPhoneCodeResponse{Success: true}, nil
+}
+
+//player register
+func (impl *playerImpl) PlayerRegister(ctx context.Context, request *types.PlayerRegisterRequest) (response *types.PlayerRegisterResponse, err error) {
+	session := impl.mysql.GetWriteEngine().NewSession()
+	defer session.Close()
+
+	//get player info
+	_, ok, err := playerModel.FindPlayer(session, func(s *xorm.Session) *xorm.Session {
+		return s.Where("phone = ?", request.Phone)
+	})
+	if err != nil {
+		log.Errorf("get player phone %s error %s", request.Phone, err.Error())
+		return nil, service.NewPlayerServiceError(http.StatusInternalServerError, err.Error())
+	}
+	if ok {
+		log.Warnf("phone %s is exit", request.Phone)
+		return nil, service.NewPlayerServiceError(http.StatusBadRequest, "phone is exit")
+	}
+
+	if _, err := impl.mysql.GetWriteEngine().Insert(&playerModel.Player{
+		Phone:      request.Phone,
+		Balance:    100000000,
+		Nick:       "player",
+		Password:   request.Password,
+		Account:    request.Phone,
+		PlatformID: 1,
+		Sign:       "sigin",
+		CreatedAt:  time.Now(),
+		UpdatedAt:  time.Now(),
+		Version:    1,
+	}); err != nil {
+		log.Errorf("insert player phone %s error %s", request.Phone, err.Error())
+		return nil, service.NewPlayerServiceError(http.StatusInternalServerError, err.Error())
+	}
+	return &types.PlayerRegisterResponse{Success: true}, nil
+}
+
 //player login
 func (impl *playerImpl) PlayerLogin(ctx context.Context, request *types.PlayerLoginRequest) (response *types.PlayerLoginResponse, err error) {
 	session := impl.mysql.GetWriteEngine().NewSession()
@@ -155,31 +198,12 @@ func (impl *playerImpl) PlayerLogin(ctx context.Context, request *types.PlayerLo
 
 	//not found
 	if !ok {
-		playerInfo = playerModel.Player{
-			Phone:      request.Phone,
-			Balance:    100000000,
-			Nick:       "player",
-			Account:    request.Phone,
-			PlatformID: 1,
-			Sign:       "sigin",
-			CreatedAt:  time.Now(),
-			UpdatedAt:  time.Now(),
-			Version:    1,
-		}
+		log.Warnf("phone %s is not found", request.Phone)
+		return nil, service.NewPlayerServiceError(http.StatusNotFound, "not found")
+	}
 
-		//insert
-		id, err := impl.mysql.GetWriteEngine().Insert(playerInfo)
-		if err != nil {
-			log.Errorf("insert player phone %s error %s", request.Phone, err.Error())
-			return nil, service.NewPlayerServiceError(http.StatusInternalServerError, err.Error())
-		}
-
-		//set player id
-		playerInfo.PlayerID = uint32(id)
-	} else {
-		if playerInfo.Password != request.Password {
-			return nil, service.NewPlayerServiceError(http.StatusBadRequest, "password error")
-		}
+	if playerInfo.Password != request.Password {
+		return nil, service.NewPlayerServiceError(http.StatusBadRequest, "password error")
 	}
 
 	//token
@@ -190,9 +214,7 @@ func (impl *playerImpl) PlayerLogin(ctx context.Context, request *types.PlayerLo
 	}
 
 	//create response
-	return &types.PlayerLoginResponse{
-		Token: token,
-	}, nil
+	return &types.PlayerLoginResponse{Token: token}, nil
 }
 
 //player match
