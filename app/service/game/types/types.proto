@@ -33,6 +33,12 @@ message GameConfig {
   uint32 maxPeople = 2 [(gogoproto.moretags) = "binding:\"required\""];
   //运行模式
   string runmode = 3;
+  //游戏游戏logo地址
+  string logo = 4;
+  //游戏地址
+  string game = 5;
+  //游戏版本
+  string version = 6;
 }
 
 //添加游戏响应

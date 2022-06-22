@@ -1293,6 +1293,18 @@
         "runmode": {
           "type": "string",
           "title": "运行模式"
+        },
+        "logo": {
+          "type": "string",
+          "title": "游戏游戏logo地址"
+        },
+        "game": {
+          "type": "string",
+          "title": "游戏地址"
+        },
+        "version": {
+          "type": "string",
+          "title": "游戏版本"
         }
       },
       "title": "游戏配置请求"
@@ -1522,6 +1534,18 @@
         "runmode": {
           "type": "string",
           "title": "运行模式"
+        },
+        "logo": {
+          "type": "string",
+          "title": "游戏游戏logo地址"
+        },
+        "game": {
+          "type": "string",
+          "title": "游戏地址"
+        },
+        "version": {
+          "type": "string",
+          "title": "游戏版本"
         }
       },
       "title": "游戏配置"

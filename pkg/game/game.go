@@ -51,6 +51,9 @@ func NewGame(
 }
 
 func (impl *gameImpl) AddGameRequest(ctx context.Context, request *types.AddGameRequest) (response *types.AddGameResponse, err error) {
+	if len(request.Config.Version) <= 0 {
+		request.Config.Version = "v1"
+	}
 	session := impl.mysql.GetWriteEngine().NewSession()
 	defer session.Close()
 
@@ -294,9 +297,5 @@ func (impl *gameImpl) FindGames(ctx context.Context, request *types.FindGamesReq
 			game.Config = &config
 		}
 	}
-	var Games []*modelgame.Game
-	for n := 0; n <= 10; n++ {
-		Games = append(Games, games...)
-	}
-	return &types.FindGamesResponse{Games: Games}, nil
+	return &types.FindGamesResponse{Games: games}, nil
 }

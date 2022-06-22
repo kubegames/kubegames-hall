@@ -15,6 +15,7 @@ import (
 	service "github.com/kubegames/kubegames-hall/app/service/platform"
 	"github.com/kubegames/kubegames-hall/app/service/platform/types"
 	"github.com/kubegames/kubegames-hall/internal/pkg/log"
+	"github.com/kubegames/kubegames-hall/internal/pkg/name"
 	"github.com/kubegames/kubegames-hall/internal/pkg/nats"
 	"github.com/kubegames/kubegames-hall/internal/pkg/nsq"
 	mysql "github.com/kubegames/kubegames-hall/internal/pkg/orm/xorm"
@@ -163,8 +164,9 @@ func (impl *platformImpl) ApplyRobot(ctx context.Context, request *types.ApplyRo
 			IsRobot:    true,
 			Phone:      fmt.Sprintf("%d", id),
 			Balance:    rand.Int63n(request.MaxBalance-request.MinBalance) + request.MinBalance,
-			Nick:       "Robot",
+			Nick:       name.GetFullName(),
 			PlatformID: 1,
+			Avatar:     fmt.Sprintf("https://api.multiavatar.com/%d.png", time.Now().UnixNano()),
 		}
 
 		//token

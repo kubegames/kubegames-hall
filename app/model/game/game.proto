@@ -54,4 +54,10 @@ message GameConfig {
   uint32 maxPeople = 5 [(gogoproto.moretags) = "xorm:\"comment('最多进入人数') BigInt\""];
   //运行模式
   string runmode = 6 [(gogoproto.moretags) = "xorm:\"comment('运行模式') Varchar(255)\""];
+  //游戏游戏logo地址
+  string logo = 7 [(gogoproto.moretags) = "xorm:\"comment('游戏游戏logo地址') Varchar(255)\""];
+  //游戏地址
+  string game = 8 [(gogoproto.moretags) = "xorm:\"comment('游戏地址') Varchar(255)\""];
+  //游戏版本
+  string version = 9 [(gogoproto.moretags) = "xorm:\"comment('游戏版本') Varchar(255)\""];
 }

@@ -2,6 +2,7 @@ package player
 
 import (
 	"context"
+	"fmt"
 	"math/rand"
 	"net/http"
 	"sync"
@@ -18,6 +19,7 @@ import (
 	service "github.com/kubegames/kubegames-hall/app/service/player"
 	"github.com/kubegames/kubegames-hall/app/service/player/types"
 	"github.com/kubegames/kubegames-hall/internal/pkg/log"
+	"github.com/kubegames/kubegames-hall/internal/pkg/name"
 	"github.com/kubegames/kubegames-hall/internal/pkg/nats"
 	mysql "github.com/kubegames/kubegames-hall/internal/pkg/orm/xorm"
 	"github.com/kubegames/kubegames-hall/pkg/platform"
@@ -167,13 +169,14 @@ func (impl *playerImpl) PlayerRegister(ctx context.Context, request *types.Playe
 	if _, err := impl.mysql.GetWriteEngine().Insert(&playerModel.Player{
 		Phone:      request.Phone,
 		Balance:    100000000,
-		Nick:       "player",
+		Nick:       name.GetFullName(),
 		Password:   request.Password,
 		Account:    request.Phone,
 		PlatformID: 1,
 		Sign:       "sigin",
 		CreatedAt:  time.Now(),
 		UpdatedAt:  time.Now(),
+		Avatar:     fmt.Sprintf("https://api.multiavatar.com/%d.png", time.Now().UnixNano()),
 		Version:    1,
 	}); err != nil {
 		log.Errorf("insert player phone %s error %s", request.Phone, err.Error())
